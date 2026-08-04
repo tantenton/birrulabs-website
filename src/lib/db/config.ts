@@ -28,4 +28,3 @@ export const SupabaseClient = await import('@supabase/supabase-js');
 export const supabase = SupabaseClient.createClient(dbConfig.url, dbConfig.anonKey);
 
 export default dbConfig;
-```

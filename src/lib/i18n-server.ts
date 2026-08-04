@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { supportedLanguages } from '@/lib/i18n';
 
-export consti18nConfig = {
+export const i18nConfig = {
   locales: supportedLanguages,
   defaultLocale: 'en',
 };

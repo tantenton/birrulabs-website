@@ -1,7 +1,9 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { x } from 'lucide-react';
+import { X } from 'lucide-react';
+import Link from 'next/link';
+import clsx from 'clsx';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -37,7 +39,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
             aria-label="Close menu"
           >
-            <x className="w-6 h-6" />
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -45,7 +47,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={onClose}
@@ -58,19 +60,19 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                 )}
               >
                 {link.name}
-              </a>
+              </Link>
             );
           })}
         </nav>
 
         <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
-          <a
+          <Link
             href="/contact"
             onClick={onClose}
             className="block w-full px-4 py-3 text-center text-white bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition-colors"
           >
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
     </div>

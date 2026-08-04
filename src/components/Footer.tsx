@@ -92,14 +92,14 @@ const Footer = ({ className }: FooterProps) => {
             <h3 className="text-white font-semibold mb-4">Products</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-sm text-slate-400 hover:text-primary-400 transition-colors">
+                <Link href="#" className="text-sm text-slate-400 hover:text-primary-400 transition-colors">
                   Web Development
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-slate-400 hover:text-primary-400 transition-colors">
+                <Link href="#" className="text-sm text-slate-400 hover:text-primary-400 transition-colors">
                   Mobile Apps
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="text-sm text-slate-400 hover:text-primary-400 transition-colors">

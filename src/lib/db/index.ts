@@ -1,9 +1,3 @@
-# BirruLabs Backend Database Library
-
-TypeScript interfaces and database utilities for BirruLabs CMS.
-
-```typescript
-// src/lib/db/index.ts
 import { createClient } from '@supabase/supabase-js';
 import { DATABASE_URL, ANON_KEY } from '$env/static/private';
 
@@ -190,10 +184,10 @@ export const db = {
     /**
      * Get by ID
      */
-    getById: async (id: string, uid: string) => {
-      const { data, error } = await supabase
-        .from('content.content_base')
-        .select('*')
+     getById: async (id: string) => {
+       const { data, error } = await supabase
+         .from('content.content_base')
+         .select('*')
         .eq('id', id)
         .single();
 
@@ -544,4 +538,3 @@ export const canEdit = (status: ContentStatus, role: Role) =>
 
 export default db;
 export { supabase };
-```
