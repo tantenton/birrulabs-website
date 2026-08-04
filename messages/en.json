@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "BirruLabs - AI Product Lab",
+    "description": "BirruLabs builds practical AI systems: autonomous agents, social automation, creative pipelines, and business software."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "articles": "Articles",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero": {
+      "title": "Building AI systems that actually work",
+      "subtitle": "BirruLabs is a technology studio focused on practical AI automation — not just demos.",
+      "cta_primary": "View Projects",
+      "cta_secondary": "Learn More"
+    },
+    "about": {
+      "title": "About BirruLabs",
+      "description": "We build autonomous AI agent systems, social media automation, affiliate automation, creative content pipelines, and business software that is actually used in daily operations."
+    },
+    "projects": {
+      "title": "Our Projects"
+    }
+  }
+}

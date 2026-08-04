@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "BirruLabs - Studio AI dan Otomasi",
+    "description": "BirruLabs membangun sistem AI praktis: agen otonom, otomasi media sosial, pipeline kreatif, dan perangkat lunak bisnis."
+  },
+  "nav": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "projects": "Proyek",
+    "articles": "Artikel",
+    "contact": "Kontak"
+  },
+  "home": {
+    "hero": {
+      "title": "Membangun sistem AI yang benar-benar bekerja",
+      "subtitle": "BirruLabs adalah studio teknologi yang fokus pada otomasi AI praktis — bukan sekadar demo.",
+      "cta_primary": "Lihat Proyek",
+      "cta_secondary": "Pelajari Lebih Lanjut"
+    },
+    "about": {
+      "title": "Tentang BirruLabs",
+      "description": "Kami membangun autonomous AI agent systems, social media automation, affiliate automation, creative content pipelines, dan business software yang benar-benar digunakan dalam operasi sehari-hari."
+    },
+    "projects": {
+      "title": "Proyek Kami"
+    }
+  }
+}
