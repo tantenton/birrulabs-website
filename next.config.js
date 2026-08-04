@@ -39,9 +39,7 @@ const nextConfig = {
     ];
   },
   reactStrictMode: true,
-  experimental: {
-    optimizePackageImports: true,
-  },
+
 };
 
 module.exports = nextConfig;
