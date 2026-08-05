@@ -1,9 +1,3 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-
-const withNextIntl = createNextIntlPlugin({
-  localePrefix: 'always',
-});
-
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -17,4 +11,4 @@ const nextConfig = {
   output: 'export',
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

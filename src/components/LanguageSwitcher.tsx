@@ -1,13 +1,12 @@
 'use client';
 
-import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const LanguageSwitcher = () => {
-  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const locale = pathname.startsWith('/id') ? 'id' : 'en';
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLanguageChange = (newLocale: 'en' | 'id') => {
