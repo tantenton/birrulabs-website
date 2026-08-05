@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -14,7 +13,12 @@ const nextConfig = {
         hostname: 'picsum.photos',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+      },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
   async redirects() {
     return [
@@ -30,16 +34,7 @@ const nextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: '/api/:path*',
-      },
-    ];
-  },
   reactStrictMode: true,
-
 };
 
 module.exports = nextConfig;

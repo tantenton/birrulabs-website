@@ -11,11 +11,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'metadata' });
+
+  const titles: Record<string, string> = {
+    id: 'BirruLabs - AI Product Lab',
+    en: 'BirruLabs - AI Product Lab',
+  };
+
+  const descriptions: Record<string, string> = {
+    id: 'Membangun sistem AI praktis: agen otonom, otomasi sosial, pipeline kreatif, dan software bisnis.',
+    en: 'Building practical AI systems: autonomous agents, social automation, creative pipelines, and business software.',
+  };
 
   return {
-    title: t('title'),
-    description: t('description'),
+    title: titles[locale] ?? titles['en'],
+    description: descriptions[locale] ?? descriptions['en'],
   };
 }
 

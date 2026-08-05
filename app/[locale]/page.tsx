@@ -32,8 +32,13 @@ const translations = {
   },
 };
 
-export default function HomePage({ params }: { params: { locale: string } }) {
-  const locale = params.locale;
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
   const t = (key: string) => {
     const keys = key.split('.');
     let value: any = translations[locale as 'en' | 'id'] || translations['en'];
