@@ -1,190 +1,177 @@
-# BirruLabs Official Website
+# BirruLabs Website
 
-Production-ready company profile for BirruLabs — AI product lab building autonomous agent systems, social media automation, affiliate automation, and creative content pipelines.
+**Official website for BirruLabs** — AI product lab building autonomous agent systems, social media automation, affiliate automation, and creative content pipelines.
 
-## Project Overview
-
-**Domain:** birrulabs.biz.id  
-**Stack:** Next.js 15, TypeScript, Tailwind CSS, PostgreSQL/Supabase  
-**Languages:** Indonesian (primary), English (secondary)  
-**Purpose:** Official web presence, startup program applications, partnership showcase, content hub
-
-## What is BirruLabs?
-
-BirruLabs is a studio building practical AI systems that work beyond the demo:
-
-- **Autonomous AI Agents:** Multi-agent orchestration with CEO, research, creative, QC, and publishing agents
-- **Social Media Automation:** Research, content planning, writing, approval, engagement, publishing
-- **Affiliate Systems:** Product-content workflow automation (Affiloom, BirruAffHub)
-- **Creative Factory:** Image, video, voice-over generation with QC pipeline
-- **Local-First Software:** Business tools that work offline (BirruHealthOS)
-- **Experimental Products:** OVC (Offline Viral Clipper), ClipPilot AI, browser-based computer-use workflows
-
-## Project Status
-
-**Phase:** Discovery → Build  
-**Agents:** 12 specialist agents working in parallel  
-**Architecture:** Multi-agent orchestrated by Hermes CEO
-
-### Agent Progress
-- ✓ Product Strategist (spawned)
-- ✓ Information Architect (spawned)
-- ✓ UX/UI Designer (spawned)
-- ✓ Technical Writer (spawned)
-- ✓ Automation Engineer (spawned)
-- ✓ DevOps Engineer (spawned)
-- ✓ SEO Specialist (spawned)
-- ✓ Security Engineer (spawned)
-- ✓ Content Writer (spawned)
-- ✓ Frontend Engineer (spawned)
-- ✓ Backend Engineer (spawned)
-- ✓ QA Engineer (spawned)
-
-## Quick Start
-
-```bash
-# Install dependencies
-npm install
-
-# Development
-npm run dev
-
-# Build
-npm run build
-
-# Test
-npm test
-
-# Lint
-npm run lint
-```
-
-## Environment Setup
-
-```bash
-cp .env.example .env.local
-# Configure:
-# - DATABASE_URL
-# - NEXT_PUBLIC_SITE_URL
-# - API keys as needed
-```
-
-## Project Structure
-
-```
-birrulabs-website/
-├── app/              # Next.js App Router
-├── components/       # React components
-├── lib/             # Utilities, DB client
-├── public/          # Static assets
-├── content/         # Content source (ID/EN)
-├── docs/            # Architecture, strategy, security
-├── automation/      # Content pipeline
-├── migrations/      # Database migrations
-└── tests/           # Test suites
-```
-
-## Features
-
-### Core Pages
-- Home: Hero, projects, capabilities, latest articles
-- About: Company story, mission, team
-- Products/Projects: Portfolio with project details
-- Blog/Insights: Articles, case studies, build updates
-- Startup Profile: Accelerator-ready company profile
-- Contact: Inquiry form with spam protection
-
-### Technical Features
-- Mobile-first responsive design
-- Dark/light adaptive theme
-- Bilingual content (ID/EN)
-- SEO optimized (meta, schema, sitemap)
-- Content management with approval workflow
-- Security hardened (CSP, rate limiting, CSRF)
-- Lighthouse performance 90+
-- Accessibility WCAG AA
-
-## Content Automation
-
-Automated article pipeline with:
-- Research & topic selection
-- Draft generation with fact-check
-- Duplicate detection
-- SEO optimization
-- Human approval queue
-- Scheduled publishing
-
-**Default:** `auto_publish=false`, `approval_required=true`
-
-## Security
-
-- HTTPS only with HSTS
-- Content Security Policy enforced
-- Rate limiting on forms
-- Input validation server-side
-- CSRF protection
-- Dependency scanning
-- No secrets in repository
-- Admin authentication required
-
-See: [docs/security/](docs/security/)
-
-## SEO Strategy
-
-- Unique meta per page
-- Schema.org markup (Organization, Article, BreadcrumbList)
-- Sitemap XML with article feed
-- Open Graph + Twitter Card
-- Canonical URLs + hreflang
-- Semantic HTML structure
-
-See: [docs/seo/](docs/seo/)
-
-## Deployment
-
-### Vercel (Recommended)
-```bash
-vercel --prod
-```
-
-### Self-Hosted
-```bash
-docker-compose up -d
-```
-
-See: [docs/deployment/](docs/deployment/)
-
-## Quality Targets
-
-- Lighthouse Performance: 90+
-- Accessibility: 95+
-- Best Practices: 95+
-- SEO: 95+
-- Mobile viewport: Perfect
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## Brand Principles
-
-- Modern, intelligent, experimental
-- Human-centered, trusted, practical
-- Founder-led, AI-native
-- Concrete over jargon
-- Evidence over claims
-
-## Contact
-
-- Website: https://birrulabs.biz.id
-- GitHub: [@tantenton](https://github.com/tantenton)
-
-## License
-
-Proprietary — BirruLabs © 2026
+🌐 **Live:** [birrulabs-audit.vercel.app](https://birrulabs-audit.vercel.app/id)  
+📦 **Status:** Production  
+🚀 **Version:** 1.0.0
 
 ---
 
-**Built with:** 12 parallel AI agents orchestrated by Hermes  
-**Started:** 2026-08-04  
-**Status:** Active Development
+## Features
+
+- ✅ **26 bilingual pages** (Indonesian primary, English secondary)
+- ✅ **6 projects** with detail pages (Affiloom, BirruHealthOS, Social Media AI Manager, Creative Factory, BirruAffHub, AI Agent Orchestration)
+- ✅ **2 articles** with full content (AI agent orchestration, human-in-the-loop)
+- ✅ **Dark-first premium design** — mobile-first, accessible
+- ✅ **Security-first** — CSP, HSTS, X-Frame-Options, rate limiting
+- ✅ **Static generation** (SSG) — all pages pre-rendered at build time
+- ✅ **SEO optimized** — sitemap.xml, robots.txt, metadata per page
+- ✅ **No fake metrics** — factual status labels only
+
+---
+
+## Pages
+
+| Path                          | Description                                    |
+|-------------------------------|------------------------------------------------|
+| `/id` & `/en`                 | Home (hero, projects, agent orchestration, CTA)|
+| `/about`                      | Mission, values, story, principles             |
+| `/projects`                   | 6 projects list + filters                      |
+| `/projects/[slug]`            | Individual project detail                      |
+| `/articles`                   | Articles index                                 |
+| `/articles/[slug]`            | Article detail                                 |
+| `/contact`                    | Contact form (UI only, no backend yet)         |
+| `/startup`                    | Startup profile (accelerator-ready)            |
+| `/services`                   | Services & capabilities                        |
+| `/roadmap`                    | Development roadmap                            |
+| `/research`                   | Research & experiments                         |
+| `/tech-stack`                 | Technology stack                               |
+| `/faq`                        | FAQ                                            |
+| `/privacy`                    | Privacy policy                                 |
+| `/terms`                      | Terms of use                                   |
+| `/security`                   | Security & responsible disclosure              |
+| `/not-found`                  | 404 page                                       |
+| `/sitemap.xml`                | Sitemap (all routes bilingual)                 |
+| `/robots.txt`                 | Robots file                                    |
+
+---
+
+## Tech Stack
+
+- **Framework:** Next.js 15.5 (App Router)
+- **Runtime:** React 19
+- **Language:** TypeScript (strict mode)
+- **Styling:** Tailwind CSS 3.4
+- **Icons:** Lucide React
+- **Hosting:** Vercel
+- **Repository:** GitHub
+
+Full stack details: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ (24.x recommended)
+- npm 9+
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/tantenton/birrulabs-website.git
+cd birrulabs-website
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+Open [http://localhost:3000/id](http://localhost:3000/id)
+
+### Build
+
+```bash
+npm run build    # Production build
+npm run start    # Serve production build locally
+```
+
+---
+
+## Development
+
+### Project Structure
+
+```
+birrulabs-website/
+├── app/
+│   ├── [locale]/              # Bilingual pages (ID/EN)
+│   ├── globals.css            # CSS custom properties
+│   ├── robots.ts              # robots.txt generation
+│   └── sitemap.ts             # sitemap.xml generation
+├── src/
+│   ├── components/            # React components
+│   ├── data/                  # Static data (projects, articles)
+│   └── lib/                   # Utilities (translations)
+├── middleware.ts              # Security headers
+├── tailwind.config.ts         # Design tokens
+└── docs/                      # Documentation
+```
+
+### Key Commands
+
+```bash
+npm run dev         # Dev server (hot reload)
+npm run build       # Production build
+npm run lint        # ESLint (if configured)
+```
+
+### Adding Content
+
+**New project:** Edit `src/data/projects.ts`  
+**New article:** Edit `src/data/articles.ts`  
+**New page:** Create `app/[locale]/page-name/page.tsx`  
+**Translations:** Edit `src/lib/translations.ts`
+
+See [docs/OPERATIONS.md](./docs/OPERATIONS.md) for detailed guides.
+
+---
+
+## Deployment
+
+**Automatic:** Push to `main` → Vercel auto-deploys  
+**Manual:** `vercel --prod`
+
+Deployment takes ~1-2 minutes. Vercel keeps deployment history for instant rollback.
+
+---
+
+## Documentation
+
+- [ARCHITECTURE.md](./docs/ARCHITECTURE.md) — System architecture, data models, routing
+- [OPERATIONS.md](./docs/OPERATIONS.md) — Content updates, deployment, troubleshooting
+- [CONTENT_WORKFLOW.md](./docs/CONTENT_WORKFLOW.md) — Content approval workflows (future)
+
+---
+
+## Contributing
+
+This is a private repository for BirruLabs internal use. Not accepting external contributions at this time.
+
+For bug reports or security issues:
+- **Security:** security@birrulabs.biz.id
+- **General:** Open GitHub issue
+
+---
+
+## License
+
+Proprietary. All rights reserved.
+
+---
+
+## Contact
+
+- **Website:** [birrulabs-audit.vercel.app](https://birrulabs-audit.vercel.app/id)
+- **Email:** contact@birrulabs.biz.id
+- **Security:** security@birrulabs.biz.id
+- **GitHub:** [tantenton/birrulabs-website](https://github.com/tantenton/birrulabs-website)
+
+---
+
+**Built with ❤️ by BirruLabs** — Building in public, no fake metrics.
