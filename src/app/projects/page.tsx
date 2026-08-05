@@ -1,3 +1,5 @@
+'use client';
+
 import MainLayout from '@/layouts/MainLayout';
 import Section from '@/components/Section';
 import ProjectCard from '@/components/ProjectCard';

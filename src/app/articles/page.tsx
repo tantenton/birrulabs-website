@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import Section from '@/components/Section';
