@@ -1,31 +1,14 @@
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n.config';
+import { Inter, JetBrains_Mono } from 'next/font/google';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-jetbrains', display: 'swap' });
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-
-  const titles: Record<string, string> = {
-    id: 'BirruLabs - AI Product Lab',
-    en: 'BirruLabs - AI Product Lab',
-  };
-
-  const descriptions: Record<string, string> = {
-    id: 'Membangun sistem AI praktis: agen otonom, otomasi sosial, pipeline kreatif, dan software bisnis.',
-    en: 'Building practical AI systems: autonomous agents, social automation, creative pipelines, and business software.',
-  };
-
-  return {
-    title: titles[locale] ?? titles['en'],
-    description: descriptions[locale] ?? descriptions['en'],
-  };
 }
 
 export default async function LocaleLayout({
@@ -36,10 +19,14 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  if (!locales.includes(locale as 'id' | 'en')) notFound();
+  const l = locale as 'id' | 'en';
 
-  if (!locales.includes(locale as any)) {
-    notFound();
-  }
-
-  return <div lang={locale}>{children}</div>;
+  return (
+    <div lang={locale} className={`${inter.variable} ${jetbrains.variable}`}>
+      <Navbar locale={l} />
+      <main>{children}</main>
+      <Footer locale={l} />
+    </div>
+  );
 }

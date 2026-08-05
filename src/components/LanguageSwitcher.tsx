@@ -1,49 +1,38 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
 
-const LanguageSwitcher = () => {
-  const router = useRouter();
+interface LanguageSwitcherProps {
+  locale: 'id' | 'en';
+}
+
+export default function LanguageSwitcher({ locale }: LanguageSwitcherProps) {
   const pathname = usePathname();
-  const locale = pathname.startsWith('/id') ? 'id' : 'en';
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
-  const handleLanguageChange = (newLocale: 'en' | 'id') => {
+  const switchTo = (newLocale: 'id' | 'en') => {
     const newPath = pathname.replace(/^\/(id|en)/, `/${newLocale}`);
     router.push(newPath);
-    setIsOpen(false);
   };
 
   return (
-    <div className="relative inline-block text-left">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        aria-label="Toggle language"
-      >
-        {locale === 'id' ? '🇮🇩' : '🇬🇧'}
-        <span className="hidden sm:inline">{locale === 'id' ? 'ID' : 'EN'}</span>
-      </button>
-
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 z-50">
-          <button
-            onClick={() => handleLanguageChange('id')}
-            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            🇮🇩 Indonesia
-          </button>
-          <button
-            onClick={() => handleLanguageChange('en')}
-            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-          >
-            🇬🇧 English
-          </button>
-        </div>
-      )}
+    <div className="flex items-center rounded-lg border border-[#2D3036] bg-[#16191F] overflow-hidden" role="group" aria-label="Language switcher">
+      {(['id', 'en'] as const).map((l) => (
+        <button
+          key={l}
+          onClick={() => switchTo(l)}
+          className={`px-3 py-1.5 text-sm font-medium transition-colors min-h-[36px] ${
+            locale === l
+              ? 'bg-indigo-600 text-white'
+              : 'text-[#A3A6AC] hover:text-[#F0F2F5]'
+          }`}
+          aria-pressed={locale === l}
+          aria-label={`Switch to ${l === 'id' ? 'Indonesian' : 'English'}`}
+        >
+          {l.toUpperCase()}
+        </button>
+      ))}
     </div>
   );
-};
-
-export default LanguageSwitcher;
+}
