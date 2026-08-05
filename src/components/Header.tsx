@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { Translate, X } from 'lucide-react';
+import { Globe, X } from 'lucide-react';
 
 interface HeaderProps {
   className?: string;
@@ -83,7 +83,7 @@ const Header = ({ className }: HeaderProps) => {
               className="flex items-center space-x-1 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
               aria-label="Toggle language"
             >
-              <Translate className="w-4 h-4" />
+              <Globe className="w-4 h-4" />
               <span>{currentLang.toUpperCase()}</span>
             </button>
 
@@ -157,7 +157,7 @@ const Header = ({ className }: HeaderProps) => {
                 className="flex items-center justify-between w-full px-4 py-3 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg"
               >
                 <div className="flex items-center space-x-2">
-                  <Translate className="w-5 h-5" />
+                  <Globe className="w-5 h-5" />
                   <span>Language</span>
                 </div>
                 <span className="text-sm font-medium">{currentLang.toUpperCase()}</span>
