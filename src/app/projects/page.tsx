@@ -5,19 +5,18 @@ import MainLayout from '@/layouts/MainLayout';
 import Section from '@/components/Section';
 import ProjectCard from '@/components/ProjectCard';
 import { projects } from '@/data/projects';
-import { useTranslations } from 'next-intl';
+
 
 type Category = 'all' | 'web' | 'mobile' | 'cloud';
 
 export default function ProjectsPage() {
-  const t = useTranslations();
   const [selectedCategory, setSelectedCategory] = useState<Category>('all');
 
   const categories: { label: string; value: Category }[] = [
-    { label: t('projects.categories.all'), value: 'all' },
-    { label: t('projects.categories.web'), value: 'web' },
-    { label: t('projects.categories.mobile'), value: 'mobile' },
-    { label: t('projects.categories.cloud'), value: 'cloud' },
+    { label: 'All', value: 'all' },
+    { label: 'Web', value: 'web' },
+    { label: 'Mobile', value: 'mobile' },
+    { label: 'Cloud', value: 'cloud' },
   ];
 
   const filteredProjects =
@@ -31,10 +30,10 @@ export default function ProjectsPage() {
       <Section padding="large" bg="secondary" align="center">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">
-            {t('projects.title')}
+            Projects
           </h1>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300">
-            {t('projects.subtitle')}
+            A showcase of my recent work
           </p>
         </div>
       </Section>

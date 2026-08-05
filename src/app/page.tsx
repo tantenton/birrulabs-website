@@ -1,8 +1,34 @@
 import MainLayout from '@/layouts/MainLayout';
-import { useTranslations } from 'next-intl';
 
 export default function Home() {
-  const t = useTranslations();
+  const content = {
+    hero: {
+      heading: 'Building Digital Solutions for Tomorrow',
+      subheading: 'We create innovative web and mobile applications that help businesses grow and succeed in the digital age.',
+      ctaPrimary: 'Get Started',
+      ctaSecondary: 'Learn More',
+    },
+    features: {
+      title: 'Our Services',
+      subtitle: 'Comprehensive digital solutions tailored to your needs',
+      items: [
+        { title: 'Web Development', description: 'Custom websites built with modern technologies for optimal performance and scalability.' },
+        { title: 'Mobile Apps', description: 'Native and cross-platform mobile applications for iOS and Android devices.' },
+        { title: 'Cloud Solutions', description: 'Scalable cloud infrastructure and DevOps services for your business.' },
+      ],
+    },
+    stats: [
+      { label: 'Projects Completed', value: '250+' },
+      { label: 'Happy Clients', value: '150+' },
+      { label: 'Team Members', value: '25+' },
+      { label: 'Years Experience', value: '10+' },
+    ],
+    cta: {
+      heading: 'Ready to Start Your Next Project?',
+      subheading: 'Let\'s work together to create innovative solutions that drive your business forward.',
+      ctaText: 'Get in Touch',
+    },
+  };
 
   return (
     <MainLayout>
@@ -21,23 +47,23 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              {t('home.hero.heading')}
+              {content.hero.heading}
             </h1>
             <p className="text-lg md:text-xl text-slate-200 mb-8 leading-relaxed">
-              {t('home.hero.subheading')}
+              {content.hero.subheading}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="/contact"
                 className="px-8 py-3.5 bg-white text-primary-600 font-semibold rounded-lg hover:bg-slate-100 transition-colors shadow-lg"
               >
-                {t('home.hero.ctaPrimary')}
+                {content.hero.ctaPrimary}
               </a>
               <a
                 href="/about"
                 className="px-8 py-3.5 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-colors"
               >
-                {t('home.hero.ctaSecondary')}
+                {content.hero.ctaSecondary}
               </a>
             </div>
           </div>
@@ -49,15 +75,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              {t('home.features.title')}
+              {content.features.title}
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-300">
-              {t('home.subtitle')}
+              {content.features.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {t.raw('home.features.items').map((item: any, index: number) => (
+            {content.features.items.map((item: any, index: number) => (
               <div
                 key={index}
                 className="p-8 rounded-2xl bg-white dark:bg-slate-800 shadow-lg hover:shadow-xl transition-shadow border border-slate-100 dark:border-slate-700"
@@ -105,16 +131,16 @@ export default function Home() {
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Ready to Start Your Next Project?
+                {content.cta.heading}
               </h2>
               <p className="text-lg text-primary-100 mb-8 max-w-2xl mx-auto">
-                Let's work together to create innovative solutions that drive your business forward.
+                {content.cta.subheading}
               </p>
               <a
                 href="/contact"
                 className="inline-block px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-slate-100 transition-colors"
               >
-                Get in Touch
+                {content.cta.ctaText}
               </a>
             </div>
           </div>

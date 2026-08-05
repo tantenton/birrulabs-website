@@ -1,7 +1,47 @@
-import { useTranslations } from 'next-intl';
+// Simple static translations (no next-intl)
+const translations = {
+  en: {
+    hero: {
+      title: "Building the Future with AI",
+      subtitle: "Next-generation AI solutions for enterprise and startup innovation.",
+      cta_primary: "Get Started",
+      cta_secondary: "Learn More",
+    },
+    about: {
+      title: "About Us",
+      description: "We build cutting-edge AI systems that transform how businesses operate.",
+    },
+    projects: {
+      title: "Our Projects",
+    },
+  },
+  id: {
+    hero: {
+      title: "Membangun Masa Depan dengan AI",
+      subtitle: "Solusi AI generasi berikutnya untuk inovasi bisnis startup dan enterprise.",
+      cta_primary: "Mulai Sekarang",
+      cta_secondary: "Pelajari Lebih Lanjut",
+    },
+    about: {
+      title: "Tentang Kami",
+      description: "Kami membangun sistem AI mutakhir yang mengubah cara bisnis beroperasi.",
+    },
+    projects: {
+      title: "Proyek Kami",
+    },
+  },
+};
 
-export default function HomePage() {
-  const t = useTranslations('home');
+export default function HomePage({ params }: { params: { locale: string } }) {
+  const locale = params.locale;
+  const t = (key: string) => {
+    const keys = key.split('.');
+    let value: any = translations[locale as 'en' | 'id'] || translations['en'];
+    for (const k of keys) {
+      value = value?.[k];
+    }
+    return value || key;
+  };
 
   return (
     <div className="container mx-auto px-4 py-16">

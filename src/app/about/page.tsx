@@ -1,7 +1,6 @@
 'use client';
 
 export default function AboutPage() {
-
   const values = [
     {
       title: 'Innovation',
@@ -31,10 +30,10 @@ export default function AboutPage() {
       <div className="bg-primary text-white py-20">
         <div className="max-w-4xl mx-auto px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            {t('about.title')}
+            About Us
           </h1>
           <p className="text-lg md:text-xl leading-relaxed">
-            {t('about.intro')}
+            Empowering businesses through innovative technology solutions
           </p>
         </div>
       </div>
@@ -42,7 +41,7 @@ export default function AboutPage() {
       {/* About Content */}
       <div className="max-w-4xl mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-8">
-          {t('about.mission')}
+          Our Mission
         </h2>
         <div className="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-300 mb-16">
           <p className="leading-relaxed">
@@ -58,7 +57,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              {t('about.vision')}
+              Our Vision
             </h3>
             <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
               To be the leading technology solutions provider, known for delivering exceptional value
@@ -67,7 +66,7 @@ export default function AboutPage() {
           </div>
           <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-              {t('about.values')}
+              Our Core Values
             </h3>
             <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
               Our core values guide everything we do. We believe in delivering excellence, maintaining

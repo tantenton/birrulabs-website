@@ -5,10 +5,8 @@ import MainLayout from '@/layouts/MainLayout';
 import Section from '@/components/Section';
 import ArticleCard from '@/components/ArticleCard';
 import { articles } from '@/data/articles';
-import { useTranslations } from 'next-intl';
 
 export default function ArticlesPage() {
-  const t = useTranslations();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const categories = ['all', ...Array.from(new Set(articles.map((a) => a.category)))];
@@ -24,10 +22,10 @@ export default function ArticlesPage() {
       <Section padding="large" bg="secondary" align="center">
         <div className="max-w-4xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">
-            {t('articles.title')}
+            Articles
           </h1>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300">
-            {t('articles.subtitle')}
+            Read our latest articles and insights
           </p>
         </div>
       </Section>
