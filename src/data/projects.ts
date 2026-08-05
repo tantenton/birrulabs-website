@@ -178,7 +178,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: '5',
-    slug: 'birrua ffhub',
+    slug: 'birrua-ffhub',
     title: {
       id: 'BirruAffHub',
       en: 'BirruAffHub',
