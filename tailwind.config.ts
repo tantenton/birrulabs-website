@@ -10,53 +10,33 @@ const config: Config = {
     extend: {
       colors: {
         surface: {
-          DEFAULT: '#0F1115',
-          elevated: '#16191F',
-          inset: '#1A1D23',
+          DEFAULT: '#0C0E12',
+          elevated: '#13161F',
+          inset: '#181C27',
+          subtle: '#1F2432',
         },
         brand: {
           primary: '#6366F1',
-          'primary-dark': '#4F46E5',
-          accent: '#10B981',
-          warning: '#F59E0B',
-          danger: '#EF4444',
+          accent: '#06B6D4',
+          emerald: '#10B981',
+          amber: '#F59E0B',
+          rose: '#F43F5E',
         },
-        text: {
-          primary: '#F0F2F5',
-          secondary: '#A3A6AC',
-          tertiary: '#6C6F75',
-          disabled: '#3A3D42',
+        ink: {
+          primary: '#F3F4F6',
+          secondary: '#9CA3AF',
+          muted: '#6B7280',
+          faint: '#374151',
         },
         border: {
-          DEFAULT: '#2D3036',
-          focus: '#6366F1',
-          error: '#EF4444',
+          DEFAULT: 'rgba(255, 255, 255, 0.08)',
+          subtle: 'rgba(255, 255, 255, 0.12)',
+          strong: 'rgba(255, 255, 255, 0.2)',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"JetBrains Mono"', '"Fira Code"', 'Menlo', 'monospace'],
-      },
-      borderRadius: {
-        sm: '4px',
-        md: '8px',
-        lg: '12px',
-        xl: '16px',
-        '2xl': '24px',
-      },
-      animation: {
-        'fade-in': 'fadeIn 300ms ease-out',
-        'slide-up': 'slideUp 300ms ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', '"JetBrains Mono"', '"Fira Code"', 'monospace'],
       },
     },
   },
@@ -64,3 +44,4 @@ const config: Config = {
 };
 
 export default config;
+

@@ -30,44 +30,58 @@ export default function Navbar({ locale }: NavbarProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-[#2D3036] bg-[#0F1115]/80 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0C0E12]/90 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
 
-          {/* LOGO */}
-          <Link href={`/${locale}`} className="flex-shrink-0 text-lg font-bold tracking-tight" aria-label="BirruLabs home">
-            Birru<span className="bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">Labs</span>
+          {/* BRAND LOGO */}
+          <Link 
+            href={`/${locale}`} 
+            className="flex items-center gap-2.5 group focus:outline-none" 
+            aria-label="BirruLabs home"
+          >
+            <span className="text-lg font-bold tracking-tight text-white">
+              Birru<span className="text-indigo-400">Labs</span>
+            </span>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-gray-500 border-l border-white/10 pl-2 hidden sm:inline-block">
+              AI Product Lab
+            </span>
           </Link>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {links.map(({ label, href }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive(href)
-                    ? 'bg-[#16191F] text-[#F0F2F5]'
-                    : 'text-[#A3A6AC] hover:text-[#F0F2F5] hover:bg-[#16191F]'
-                }`}
-                aria-current={isActive(href) ? 'page' : undefined}
-              >
-                {label}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
+            {links.map(({ label, href }) => {
+              const active = isActive(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`text-sm font-medium transition-colors ${
+                    active
+                      ? 'text-white font-semibold'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                  aria-current={active ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* RIGHT SIDE */}
-          <div className="flex items-center gap-3">
+          {/* RIGHT ACTIONS */}
+          <div className="flex items-center gap-4">
             <LanguageSwitcher locale={locale} />
+            
             <Link
               href={`/${locale}/contact`}
-              className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors min-h-[36px]"
+              className="hidden sm:inline-flex items-center px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold uppercase tracking-wider transition-colors"
             >
-              {locale === 'id' ? 'Hubungi' : 'Contact Us'}
+              {locale === 'id' ? 'Kontak' : 'Contact'}
             </Link>
+
             {/* HAMBURGER */}
             <button
-              className="md:hidden p-2 rounded-lg text-[#A3A6AC] hover:text-[#F0F2F5] hover:bg-[#16191F] transition-colors"
+              className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
@@ -83,3 +97,5 @@ export default function Navbar({ locale }: NavbarProps) {
     </>
   );
 }
+
+

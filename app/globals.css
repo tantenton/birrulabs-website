@@ -3,33 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --bg-surface: #0F1115;
-  --bg-surface-elevated: #16191F;
-  --bg-surface-inset: #1A1D23;
-  --text-primary: #F0F2F5;
-  --text-secondary: #A3A6AC;
-  --text-tertiary: #6C6F75;
-  --brand-primary: #6366F1;
-  --brand-accent: #10B981;
-  --brand-warning: #F59E0B;
-  --brand-danger: #EF4444;
-  --border-default: #2D3036;
-  --border-focus: #6366F1;
+  --bg-surface: #0C0E12;
+  --bg-surface-elevated: #13161F;
+  --bg-surface-inset: #181C27;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+  --brand-indigo: #6366F1;
+  --brand-cyan: #06B6D4;
+  --brand-emerald: #10B981;
+  --border-default: rgba(255, 255, 255, 0.08);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #0F1115;
-    color: #F0F2F5;
+    background-color: #0C0E12;
+    color: #F3F4F6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    background-color: #0F1115;
-    color: #F0F2F5;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #0C0E12;
+    color: #F3F4F6;
+    font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
 
   *:focus-visible {
@@ -38,7 +37,51 @@
   }
 
   ::selection {
-    background-color: rgba(99, 102, 241, 0.3);
+    background-color: rgba(99, 102, 241, 0.25);
+    color: #FFFFFF;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0C0E12;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1F2432;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+  }
+}
+
+@layer utilities {
+  .lab-card {
+    background: #13161F;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+  }
+
+  .lab-card-interactive {
+    background: #13161F;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .lab-card-interactive:hover {
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .mono-label {
+    font-family: var(--font-jetbrains), '"JetBrains Mono"', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
@@ -50,3 +93,5 @@
     scroll-behavior: auto !important;
   }
 }
+
+

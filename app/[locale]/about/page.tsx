@@ -1,133 +1,75 @@
 import type { Metadata } from 'next';
-import { getT } from '@/lib/translations';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import type { Locale } from '@/lib/translations';
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
-  const { locale } = await params;
-  const t = getT(locale as Locale);
-  return {
-    title: `${t.about.title} | BirruLabs`,
-    description: t.about.subtitle,
-  };
-}
-
-const PRINCIPLES: Record<Locale, string[]> = {
-  id: [
-    'Local-first: sistem yang berjalan offline, sync ketika koneksi tersedia',
-    'Human-in-the-loop: AI membantu, manusia memutuskan',
-    'Minimal dependency: audit semua package, jangan tambah yang tidak perlu',
-    'Security by default: enkripsi, validasi input, secure headers',
-    'Build in public: dokumentasikan proses, bukan hanya hasil',
-    'No fake metrics: hanya tampilkan data yang nyata',
-  ],
-  en: [
-    'Local-first: systems that run offline, sync when connectivity is available',
-    'Human-in-the-loop: AI assists, humans decide',
-    'Minimal dependency: audit all packages, add only what is needed',
-    'Security by default: encryption, input validation, secure headers',
-    'Build in public: document the process, not just the outcome',
-    'No fake metrics: only display real, verifiable data',
-  ],
+export const metadata: Metadata = {
+  title: 'Tentang BirruLabs — AI Product Lab',
+  description: 'Filosofi, arsitektur, dan prinsip rekayasa di balik BirruLabs.',
 };
 
-const BUILDING: Record<Locale, { title: string; desc: string }[]> = {
-  id: [
-    { title: 'Autonomous AI Agents', desc: 'CEO orchestrator yang mengelola specialized worker agents.' },
-    { title: 'Social Media Automation', desc: 'Pipeline riset, penulisan, approval, dan publishing otomatis.' },
-    { title: 'Affiliate Automation', desc: 'Affiloom dan BirruAffHub untuk workflow affiliate end-to-end.' },
-    { title: 'Creative Pipelines', desc: 'Generasi gambar, video, voice-over dengan QC pipeline.' },
-    { title: 'Local-First Business Software', desc: 'BirruHealthOS: ERP yang berjalan offline.' },
-  ],
-  en: [
-    { title: 'Autonomous AI Agents', desc: 'CEO orchestrator managing specialized worker agents.' },
-    { title: 'Social Media Automation', desc: 'Automated research, writing, approval, and publishing pipeline.' },
-    { title: 'Affiliate Automation', desc: 'Affiloom and BirruAffHub for end-to-end affiliate workflows.' },
-    { title: 'Creative Pipelines', desc: 'Image, video, voice-over generation with QC pipeline.' },
-    { title: 'Local-First Business Software', desc: 'BirruHealthOS: ERP that runs offline.' },
-  ],
-};
+const PRINCIPLES = [
+  { num: '01', title: { id: 'Local-First Software', en: 'Local-First Software' }, desc: { id: 'Privasi data dan keandalan lokal diutamakan sebelum sinkronisasi cloud.', en: 'Data ownership and local reliability take precedence over cloud dependency.' } },
+  { num: '02', title: { id: 'Human-in-the-Loop', en: 'Human-in-the-Loop Control' }, desc: { id: 'Setiap keputusan agen kritis memerlukan gerbang persetujuan manusia.', en: 'Critical agent actions require explicit human sign-off gates.' } },
+  { num: '03', title: { id: 'Verifikabilitas Empiris', en: 'Empirical Verification' }, desc: { id: 'Bukti pengujian otomatis dan log audit lebih utama dibanding klaim pemasaran.', en: 'Automated test evidence and audit logs over marketing claims.' } },
+  { num: '04', title: { id: 'Minimal Dependencies', en: 'Minimal Dependencies' }, desc: { id: 'Penggunaan pustaka seperlunya untuk menjaga kestabilan jangka panjang.', en: 'Restrained library usage to preserve long-term maintainability.' } },
+  { num: '05', title: { id: 'Security by Default', en: 'Security by Default' }, desc: { id: 'Batas keamanan data dan isolasi memori diterapkan sejak desain awal.', en: 'Data security boundaries and memory isolation enforced by design.' } },
+  { num: '06', title: { id: 'Transparansi Tahap', en: 'Explicit Stage Transparency' }, desc: { id: 'Status proyek (Internal Alpha, Prototype) ditampilkan secara jujur.', en: 'Project stages are communicated with complete honesty.' } },
+];
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const l = locale as Locale;
-  const t = getT(l);
 
   return (
-    <div className="min-h-screen bg-[#0F1115] text-[#F0F2F5]">
+    <div className="min-h-screen bg-[#0C0E12] text-[#F3F4F6]">
+      
+      {/* MANIFESTO HERO */}
+      <section className="px-4 sm:px-6 pt-20 pb-16 max-w-7xl mx-auto border-b border-white/10 space-y-6">
+        <div className="text-xs font-mono uppercase tracking-widest text-indigo-400">
+          Manifesto & Philosophy
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight max-w-4xl">
+          {l === 'id' ? 'BirruLabs bukan software house. Ini adalah AI Product Lab.' : 'BirruLabs is an AI Product Lab.'}
+        </h1>
+        <p className="text-gray-300 text-lg sm:text-xl max-w-3xl leading-relaxed">
+          {l === 'id'
+            ? 'Situs web ini adalah bukti bagaimana lab berpikir, memilih, membangun, menguji, dan mendokumentasikan sistem AI.'
+            : 'This website is evidence of how the lab thinks, chooses, builds, tests, and documents software systems.'}
+        </p>
+      </section>
 
-      {/* HERO */}
-      <section className="px-4 py-20 md:py-28 border-b border-[#2D3036]">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">{t.about.title}</h1>
-          <p className="text-xl text-[#A3A6AC] leading-relaxed">{t.about.subtitle}</p>
+      {/* CORE PRINCIPLES */}
+      <section className="px-4 sm:px-6 py-20 max-w-7xl mx-auto border-b border-white/10 space-y-12">
+        <div className="max-w-2xl space-y-2">
+          <div className="text-xs font-mono uppercase tracking-widest text-indigo-400">Prinsip Rekayasa</div>
+          <h2 className="text-3xl font-bold text-white tracking-tight">6 Prinsip Teknologi BirruLabs</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PRINCIPLES.map((p) => (
+            <div key={p.num} className="p-6 rounded-xl bg-[#13161F] border border-white/10 space-y-3">
+              <span className="text-xs font-mono text-indigo-400 font-bold">{p.num}</span>
+              <h3 className="font-bold text-white text-lg">{p.title[l]}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{p.desc[l]}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* MISSION + VALUES */}
-      <section className="px-4 py-16 border-b border-[#2D3036]">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-6 rounded-xl bg-[#16191F] border border-[#2D3036]">
-            <div className="text-2xl mb-4">🎯</div>
-            <h2 className="text-xl font-semibold mb-3">{t.about.mission_title}</h2>
-            <p className="text-[#A3A6AC] leading-relaxed">{t.about.mission_text}</p>
-          </div>
-          <div className="p-6 rounded-xl bg-[#16191F] border border-[#2D3036]">
-            <div className="text-2xl mb-4">🛠️</div>
-            <h2 className="text-xl font-semibold mb-3">{t.about.values_title}</h2>
-            <ul className="space-y-2">
-              {t.about.values.map((v) => (
-                <li key={v} className="flex items-start gap-2 text-[#A3A6AC]">
-                  <span className="text-emerald-400 mt-0.5">✓</span>
-                  {v}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* STORY */}
-      <section className="px-4 py-16 border-b border-[#2D3036]">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold mb-6">{t.about.story_title}</h2>
-          <p className="text-[#A3A6AC] text-lg leading-relaxed">{t.about.story_text}</p>
-        </div>
-      </section>
-
-      {/* WHAT WE BUILD */}
-      <section className="px-4 py-16 border-b border-[#2D3036]">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl font-bold mb-10">
-            {l === 'id' ? 'Yang Sedang Kami Bangun' : 'What We Are Building'}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {BUILDING[l].map(({ title, desc }) => (
-              <div key={title} className="p-5 rounded-lg bg-[#16191F] border border-[#2D3036]">
-                <h3 className="font-semibold mb-2 text-indigo-300">{title}</h3>
-                <p className="text-[#A3A6AC] text-sm leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TECHNOLOGY PRINCIPLES */}
-      <section className="px-4 py-16">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold mb-10">
-            {l === 'id' ? 'Prinsip Teknologi' : 'Technology Principles'}
-          </h2>
-          <ul className="space-y-4">
-            {PRINCIPLES[l].map((p, i) => (
-              <li key={i} className="flex items-start gap-4 p-4 rounded-lg bg-[#16191F] border border-[#2D3036]">
-                <span className="text-indigo-400 font-mono font-bold text-sm mt-0.5 w-6 flex-shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[#A3A6AC] leading-relaxed">{p}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* INVITATION */}
+      <section className="px-4 sm:px-6 py-20 max-w-4xl mx-auto text-center space-y-6">
+        <h2 className="text-3xl font-bold text-white">Mari Berdiskusi Arsitektur Sistem</h2>
+        <p className="text-gray-400 text-base max-w-xl mx-auto leading-relaxed">
+          Kami menyambut diskusi teknis mengenai arsitektur agen, otomatisasi workflow, dan integrasi software bisnis.
+        </p>
+        <Link
+          href={`/${l}/contact`}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-colors"
+        >
+          <span>Hubungi Labs</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </section>
 
     </div>

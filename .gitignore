@@ -57,3 +57,5 @@ public/uploads/
 # Misc
 .temp/
 .tmp/
+*.png
+
