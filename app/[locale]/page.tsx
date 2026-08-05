@@ -177,11 +177,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                     </div>
                     <div>
                       <div className="text-xs font-semibold text-white">Multi-Agent Workflow</div>
-                      <div className="text-[11px] text-gray-400">Status: Autonomous Execution</div>
+                      <div className="text-[11px] text-gray-400">Status: Simulated Preview</div>
                     </div>
                   </div>
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    ONLINE
+                  <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    ALPHA DEMO
                   </span>
                 </div>
 

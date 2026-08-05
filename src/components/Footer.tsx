@@ -55,10 +55,10 @@ export default function Footer({ locale }: FooterProps) {
             </p>
 
             {/* STATUS BADGE */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
               <Activity className="w-3.5 h-3.5" />
-              <span>{locale === 'id' ? 'Sistem Agen Aktif (100% Operational)' : 'AI Agents Active (100% Operational)'}</span>
+              <span>{locale === 'id' ? 'Status Sistem: Internal Alpha (System Preview)' : 'System Status: Internal Alpha (System Preview)'}</span>
             </div>
 
             {/* SOCIAL */}
