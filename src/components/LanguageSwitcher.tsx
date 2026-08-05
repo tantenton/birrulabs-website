@@ -1,18 +1,18 @@
 'use client';
 
-import { useTranslation } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const LanguageSwitcher = () => {
-  const { locale, setLocale } = useTranslation();
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLanguageChange = (newLocale: 'en' | 'id') => {
-    setLocale(newLocale);
-    router.push(pathname);
+    const newPath = pathname.replace(/^\/(id|en)/, `/${newLocale}`);
+    router.push(newPath);
     setIsOpen(false);
   };
 
