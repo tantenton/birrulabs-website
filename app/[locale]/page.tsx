@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Bot, Zap, Sparkles, ArrowRight, Terminal, Cpu, CheckCircle2, ShieldCheck, Layers, ArrowUpRight, Play } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ShieldCheck, Cpu, Terminal, CheckCircle2, UserCheck, Layers, GitBranch } from 'lucide-react';
 import { PROJECTS } from '@/data/projects';
 import { getT } from '@/lib/translations';
 import type { Locale } from '@/lib/translations';
@@ -9,33 +9,25 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = getT(locale as Locale);
   return {
-    title: 'BirruLabs — Autonomous AI Product Lab',
+    title: 'BirruLabs — AI Product Lab',
     description: t.hero.subtitle,
   };
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  'Internal Alpha': 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shadow-sm shadow-emerald-500/10',
-  'Prototype': 'bg-amber-500/10 text-amber-400 border border-amber-500/20 shadow-sm shadow-amber-500/10',
-  'In Development': 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-sm shadow-cyan-500/10',
-  'Research': 'bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-sm shadow-purple-500/10',
-  'Pilot': 'bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-sm shadow-orange-500/10',
-  'Experimental': 'bg-pink-500/10 text-pink-400 border border-pink-500/20 shadow-sm shadow-pink-500/10',
+const STAGE_BADGES: Record<string, string> = {
+  'Internal Alpha': 'bg-amber-500/10 text-amber-300 border border-amber-500/20',
+  'Prototype': 'bg-blue-500/10 text-blue-300 border border-blue-500/20',
+  'In Development': 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/20',
+  'Research Track': 'bg-indigo-500/10 text-indigo-300 border border-indigo-500/20',
 };
 
-const STEPS = ['step_research', 'step_design', 'step_build', 'step_ship'] as const;
-const STEP_DESCS: Record<Locale, string[]> = {
-  id: ['Riset mendalam & identifikasi masalah', 'Arsitektur multi-agen & UX presisi', 'Pengembangan dengan TDD & CI/CD', 'Deploy, monitoring & continuous learning'],
-  en: ['Deep problem research & solution specs', 'Multi-agent architecture & precision UX', 'Development with TDD & CI/CD', 'Deployment, monitoring & continuous learning'],
-};
-
-const AGENTS = [
-  { name: 'CEO Orchestrator', role: 'Task Decomposition', color: 'border-indigo-500/40 bg-indigo-600/20 text-indigo-300' },
-  { name: 'Research Agent', role: 'Context & Knowledge Retrieval', color: 'border-cyan-500/40 bg-cyan-600/20 text-cyan-300' },
-  { name: 'Creative Agent', role: 'UI/UX & Copy Synthesis', color: 'border-purple-500/40 bg-purple-600/20 text-purple-300' },
-  { name: 'Engineering Agent', role: 'Code Generation & Refactoring', color: 'border-emerald-500/40 bg-emerald-600/20 text-emerald-300' },
-  { name: 'QC Agent', role: 'Automated Testing & Audit', color: 'border-amber-500/40 bg-amber-600/20 text-amber-300' },
-  { name: 'Publishing Agent', role: 'CI/CD & Deployment', color: 'border-blue-500/40 bg-blue-600/20 text-blue-300' },
+const HOW_WE_BUILD_STEPS = [
+  { step: '01', title: { id: 'Investigasi', en: 'Investigate' }, desc: { id: 'Identifikasi masalah operasional nyata dan batasan arsitektur.', en: 'Identify concrete operational friction and architectural constraints.' } },
+  { step: '02', title: { id: 'Definisi Spesifikasi', en: 'Define' }, desc: { id: 'Formulasi kontrak data, alur agen, dan poin evaluasi manusia.', en: 'Formulate data contracts, agent roles, and human approval checkpoints.' } },
+  { step: '03', title: { id: 'Desain Arsitektur', en: 'Design' }, desc: { id: 'Rancang graf aliran data, integrasi API, dan skema memori.', en: 'Map data flow graphs, API integrations, and shared memory schemas.' } },
+  { step: '04', title: { id: 'Implementasi TDD', en: 'Implement' }, desc: { id: 'Pengembangan berbasis pengujian otomatis dan komponen modular.', en: 'Build with test-driven development and strict component modularity.' } },
+  { step: '05', title: { id: 'Validasi & Audit', en: 'Validate' }, desc: { id: 'Evaluasi akurasi, performa edge-case, dan keamanan sistem.', en: 'Audit system accuracy, edge-case behavior, and security boundaries.' } },
+  { step: '06', title: { id: 'Operasi & Monitoring', en: 'Operate' }, desc: { id: 'Deploy ke lingkungan kerja dengan telemetri dan log audit.', en: 'Deploy to live environments with full telemetry and audit trails.' } },
 ];
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -43,148 +35,85 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const l = locale as Locale;
   const t = getT(l);
 
-  const featured = PROJECTS.filter((p) => p.featured).slice(0, 3);
+  const featured = PROJECTS.find((p) => p.slug === 'affiloom') || PROJECTS[0];
+  const supporting = PROJECTS.filter((p) => p.id !== featured.id).slice(0, 3);
 
   return (
-    <div className="relative min-h-screen bg-[#0B0D13] text-[#F3F4F6] selection:bg-indigo-500/30 selection:text-white">
-      
-      {/* AMBIENT BACKGROUND GLOWS */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-radial-glow pointer-events-none z-0" />
-      <div className="absolute top-20 right-10 w-80 h-80 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
-      <div className="absolute top-96 left-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none z-0" />
+    <div className="relative min-h-screen bg-[#0C0E12] text-[#F3F4F6] selection:bg-indigo-500/20">
 
-      {/* HERO SECTION */}
-      <section className="relative z-10 px-4 sm:px-6 pt-24 pb-20 md:pt-32 md:pb-28 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* 1. MANIFESTO HERO */}
+      <section className="px-4 sm:px-6 pt-20 pb-20 md:pt-28 md:pb-24 max-w-7xl mx-auto border-b border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* LEFT: TEXT CONTENT */}
+          {/* Left Column (7 cols): Editorial Headline & Action */}
           <div className="lg:col-span-7 space-y-8">
-            
-            {/* LIVE BADGE */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.04] border border-indigo-500/30 backdrop-blur-md text-indigo-300 text-xs sm:text-sm font-mono shadow-inner shadow-indigo-500/20">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
-              </span>
-              <span>Building in Public — Autonomous AI Product Lab</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-white/[0.04] border border-white/10 text-xs font-mono text-indigo-300">
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+              <span>AI Product Lab — Stage: Internal Alpha</span>
             </div>
 
-            {/* TITLE */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
-              {l === 'id' ? (
-                <>
-                  Membangun Sistem <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">AI Otonom</span> & Produk Masa Depan
-                </>
-              ) : (
-                <>
-                  Engineering <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">Autonomous AI</span> Systems Beyond Demos
-                </>
-              )}
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.15] text-white">
+              {l === 'id' 
+                ? 'Membangun sistem AI yang benar-benar bekerja.' 
+                : 'Engineering practical AI systems built for verification.'}
             </h1>
 
-            {/* SUBTITLE */}
             <p className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-2xl font-normal">
-              {t.hero.subtitle}
+              {l === 'id'
+                ? 'BirruLabs adalah studio teknologi yang merancang autonomous agent systems, software business local-first, dan otomatisasi workflow teruji.'
+                : 'BirruLabs is an AI product lab building autonomous agent systems, local-first business software, and verifiable content pipelines.'}
             </p>
 
-            {/* CALL TO ACTION BUTTONS */}
             <div className="flex flex-col sm:flex-row gap-4 pt-2">
               <Link
                 href={`/${l}/projects`}
-                className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-semibold text-base shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all duration-300 active:scale-95"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-colors"
               >
-                <span>{t.hero.cta_primary}</span>
-                <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                <span>{l === 'id' ? 'Jelajahi Proyek' : 'Explore Systems'}</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
-
               <Link
-                href={`/${l}/contact`}
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-indigo-500/40 text-gray-200 hover:text-white font-semibold text-base backdrop-blur-md transition-all duration-300 active:scale-95"
+                href={`/${l}/about`}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-gray-300 hover:text-white font-semibold text-sm transition-colors"
               >
-                <span>{t.hero.cta_secondary}</span>
+                <span>{l === 'id' ? 'Prinsip Arsitektur' : 'Design Bible & Principles'}</span>
               </Link>
             </div>
-
-            {/* KEY METRICS / TRUST TAGS */}
-            <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-left">
-              <div>
-                <div className="text-2xl font-bold text-white font-mono">4+</div>
-                <div className="text-xs text-gray-400">{l === 'id' ? 'Produk Aktif' : 'Active Products'}</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white font-mono">6</div>
-                <div className="text-xs text-gray-400">{l === 'id' ? 'Agen Otonom' : 'Orchestrated Agents'}</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-white font-mono">100%</div>
-                <div className="text-xs text-gray-400">{l === 'id' ? 'Transparan in Public' : 'Public Build Status'}</div>
-              </div>
-            </div>
-
           </div>
 
-          {/* RIGHT: INTERACTIVE AI AGENT TERMINAL / PREVIEW WIDGET */}
+          {/* Right Column (5 cols): System Stage Metadata Card */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-indigo-500/30 via-cyan-500/20 to-transparent shadow-2xl shadow-indigo-950/50">
-              <div className="bg-[#121520]/90 backdrop-blur-xl rounded-[15px] p-5 space-y-4 border border-white/10">
-                
-                {/* WINDOW HEADER */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-indigo-300 font-mono">
-                    <Terminal className="w-3.5 h-3.5" />
-                    <span>birrulabs-orchestrator.v2</span>
-                  </div>
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <div className="p-6 rounded-xl bg-[#13161F] border border-white/10 space-y-5">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <span className="text-xs font-mono uppercase tracking-widest text-gray-400">System Blueprint</span>
+                <span className="text-xs font-mono px-2.5 py-1 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                  INTERNAL ALPHA
+                </span>
+              </div>
+
+              <div className="space-y-4 text-xs font-mono text-gray-300">
+                <div className="flex justify-between border-b border-white/[0.06] pb-2">
+                  <span className="text-gray-500">Target Architecture</span>
+                  <span className="text-white font-medium">Multi-Agent Orchestration</span>
                 </div>
-
-                {/* LIVE SIMULATION LOG FEED */}
-                <div className="space-y-3 font-mono text-xs text-gray-300 py-2">
-                  <div className="flex items-start gap-2 text-indigo-400">
-                    <span className="text-gray-600">[00:01]</span>
-                    <span className="font-semibold">[CEO-Agent]</span>
-                    <span className="text-gray-300">Initializing project execution tree for Affiloom AI...</span>
-                  </div>
-
-                  <div className="flex items-start gap-2 text-cyan-400">
-                    <span className="text-gray-600">[00:02]</span>
-                    <span className="font-semibold">[Research]</span>
-                    <span className="text-gray-300">Retrieved 14 contextual patterns & market signals</span>
-                  </div>
-
-                  <div className="flex items-start gap-2 text-emerald-400">
-                    <span className="text-gray-600">[00:04]</span>
-                    <span className="font-semibold">[Engineer]</span>
-                    <span className="text-gray-300">Compiled Next.js 15 App Router routes (0 errors)</span>
-                  </div>
-
-                  <div className="flex items-start gap-2 text-purple-400">
-                    <span className="text-gray-600">[00:05]</span>
-                    <span className="font-semibold">[QC-Agent]</span>
-                    <span className="text-gray-300">Automated tests passed: 18/18 specs green</span>
-                  </div>
+                <div className="flex justify-between border-b border-white/[0.06] pb-2">
+                  <span className="text-gray-500">Execution Strategy</span>
+                  <span className="text-white font-medium">Human-in-the-Loop Gate</span>
                 </div>
-
-                {/* PREVIEW STATUS CARD */}
-                <div className="p-3.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-indigo-600/30 text-indigo-300">
-                      <Cpu className="w-4 h-4 animate-spin" style={{ animationDuration: '8s' }} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-semibold text-white">Multi-Agent Workflow</div>
-                      <div className="text-[11px] text-gray-400">Status: Simulated Preview</div>
-                    </div>
-                  </div>
-                  <span className="text-xs font-mono px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    ALPHA DEMO
-                  </span>
+                <div className="flex justify-between border-b border-white/[0.06] pb-2">
+                  <span className="text-gray-500">Persistence Paradigm</span>
+                  <span className="text-white font-medium">Local-First Sync</span>
                 </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Evaluation Metric</span>
+                  <span className="text-white font-medium">Empirical Test Verification</span>
+                </div>
+              </div>
 
+              <div className="pt-2 text-[11px] text-gray-400 leading-relaxed border-t border-white/10">
+                {l === 'id' 
+                  ? 'Catatan: Sistem berada dalam tahap pengujian Internal Alpha. Semua metrik berdasarkan hasil pengujian lokal terverifikasi.' 
+                  : 'Note: Systems are currently in Internal Alpha testing stage. All metrics reflect verified internal build benchmarks.'}
               </div>
             </div>
           </div>
@@ -192,129 +121,113 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* WHAT WE BUILD / CORE PILLARS */}
-      <section className="relative z-10 px-4 sm:px-6 py-20 border-t border-white/10 bg-[#0D0F17]/60">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              {t.home.what_we_build_title}
-            </h2>
-            <p className="text-gray-400 text-base sm:text-lg">
-              {t.home.what_we_build_subtitle}
+      {/* 2. PROOF OF THINKING (EDITORIAL MANIFESTO STATEMENT - NO CARDS) */}
+      <section className="px-4 sm:px-6 py-20 border-b border-white/10 bg-[#0E1016]">
+        <div className="max-w-[720px] mx-auto space-y-6">
+          <div className="text-xs font-mono uppercase tracking-widest text-indigo-400">
+            01 / Metodologi Produk
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white leading-snug">
+            {l === 'id' 
+              ? 'Kami percaya bahwa kecerdasan buatan hanya berharga jika diintegrasikan dengan disiplin rekayasa sistem yang teruji.' 
+              : 'AI capabilities are only as valuable as the software engineering discipline that governs them.'}
+          </h2>
+          <div className="space-y-4 text-gray-300 text-base leading-relaxed">
+            <p>
+              {l === 'id'
+                ? 'Sebagian besar produk AI berorientasi pada demo singkat tanpa memperhatikan keandalan batas edge-case, validasi input, dan alur persetujuan manusia. BirruLabs dibangun dengan prinsip sebaliknya: mengutamakan transparansi tahap pengembangan, arsitektur local-first, dan pengawasan manusia pada setiap titik keputusan kritis.'
+                : 'Many AI implementations focus on superficial demos while ignoring boundary validation, local persistence, and human sign-off gates. BirruLabs is built on the opposite premise: explicit stage transparency, local-first software reliability, and human supervision at every decision checkpoint.'}
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Bot,
-                title: t.home.ai_agents_title,
-                desc: t.home.ai_agents_desc,
-                color: 'text-indigo-400',
-                bg: 'bg-indigo-500/10 border-indigo-500/20',
-                glow: 'group-hover:border-indigo-500/50',
-              },
-              {
-                icon: Zap,
-                title: t.home.automation_title,
-                desc: t.home.automation_desc,
-                color: 'text-cyan-400',
-                bg: 'bg-cyan-500/10 border-cyan-500/20',
-                glow: 'group-hover:border-cyan-500/50',
-              },
-              {
-                icon: Sparkles,
-                title: t.home.creative_title,
-                desc: t.home.creative_desc,
-                color: 'text-purple-400',
-                bg: 'bg-purple-500/10 border-purple-500/20',
-                glow: 'group-hover:border-purple-500/50',
-              },
-            ].map(({ icon: Icon, title, desc, color, bg, glow }) => (
-              <div
-                key={title}
-                className={`group p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] transition-all duration-300 ${glow} hover:-translate-y-1.5 shadow-xl`}
-              >
-                <div className={`inline-flex p-4 rounded-xl border ${bg} mb-6 shadow-inner`}>
-                  <Icon className={`w-7 h-7 ${color}`} aria-hidden="true" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors">
-                  {title}
-                </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
-                  {desc}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* FEATURED PROJECTS SHOWCASE */}
-      <section className="relative z-10 px-4 sm:px-6 py-20 border-t border-white/10">
-        <div className="max-w-7xl mx-auto">
+      {/* 3. SELECTED SYSTEMS */}
+      <section className="px-4 sm:px-6 py-24 border-b border-white/10 max-w-7xl mx-auto space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-indigo-400 mb-2">
+              02 / Portfolio & Sistem Aktif
+            </div>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
+              {l === 'id' ? 'Sistem Terpilih' : 'Selected Systems'}
+            </h2>
+          </div>
+          <Link href={`/${l}/projects`} className="text-sm font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+            <span>{l === 'id' ? 'Lihat Semua Sistem' : 'View All Systems'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {/* Asymmetrical Layout: 8 cols Featured + 4 cols Active List */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-indigo-400 mb-2">
-                <Layers className="w-4 h-4" />
-                <span>Selected Portfolio</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                {t.projects.title}
-              </h2>
-              <p className="text-gray-400 mt-2 text-base max-w-xl">
-                {t.projects.subtitle}
+          {/* Featured System (8 cols) */}
+          <div className="lg:col-span-8 p-8 rounded-xl bg-[#13161F] border border-white/10 space-y-6">
+            <div className="flex items-center justify-between gap-4">
+              <span className={`text-xs font-mono px-3 py-1 rounded ${STAGE_BADGES[featured.status] || 'bg-gray-500/10 text-gray-400'}`}>
+                {featured.status}
+              </span>
+              <span className="text-xs font-mono text-gray-400 uppercase">{featured.category}</span>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-2xl font-bold text-white flex items-center justify-between">
+                <span>{featured.title[l]}</span>
+                <Link href={`/${l}/projects/${featured.slug}`} aria-label={featured.title[l]}>
+                  <ArrowUpRight className="w-5 h-5 text-gray-400 hover:text-white transition-colors" />
+                </Link>
+              </h3>
+              <p className="text-gray-300 text-base leading-relaxed">
+                {featured.summary[l]}
               </p>
             </div>
-            
-            <Link
-              href={`/${l}/projects`}
-              className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-semibold text-sm group"
-            >
-              <span>{t.projects.view_all}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+
+            {/* System Problem & Approach Evidence */}
+            <div className="pt-6 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-400">
+              <div>
+                <span className="font-mono text-gray-500 uppercase block mb-1">Masalah / Problem</span>
+                <p className="text-gray-300 leading-relaxed">
+                  {l === 'id' ? 'Alur kerja affiliate manual yang lambat dan rentan inkonsistensi data.' : 'Manual affiliate research workflows prone to data fragmentation.'}
+                </p>
+              </div>
+              <div>
+                <span className="font-mono text-gray-500 uppercase block mb-1">Pendekatan / Approach</span>
+                <p className="text-gray-300 leading-relaxed">
+                  {l === 'id' ? 'Otomatisasi multi-agen terintegrasi dengan persetujuan manusia pada setiap rilis.' : 'Multi-agent orchestration with mandatory human sign-off gates.'}
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-4 flex flex-wrap gap-2">
+              {featured.techStack.map((tech) => (
+                <span key={tech} className="text-xs px-2.5 py-1 rounded bg-white/[0.04] text-gray-300 font-mono border border-white/5">
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featured.map((p) => (
+          {/* Supporting Active Systems List (4 cols) */}
+          <div className="lg:col-span-4 space-y-4">
+            <h3 className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-2">Sistem Aktif Lainnya</h3>
+            {supporting.map((p) => (
               <Link
                 key={p.id}
                 href={`/${l}/projects/${p.slug}`}
-                className="group relative rounded-2xl p-[1px] bg-white/10 hover:bg-gradient-to-b hover:from-indigo-500/40 hover:to-cyan-500/20 transition-all duration-300 hover:-translate-y-1.5 shadow-xl"
+                className="block p-5 rounded-xl bg-[#13161F] border border-white/10 hover:border-indigo-500/30 transition-all space-y-2 group"
               >
-                <div className="h-full bg-[#121520] rounded-[15px] p-7 flex flex-col justify-between space-y-6">
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className={`text-xs px-3 py-1 rounded-full font-medium ${STATUS_COLORS[p.status] || 'bg-gray-500/10 text-gray-400'}`}>
-                        {p.status}
-                      </span>
-                      <span className="text-xs text-gray-400 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/5 font-mono">
-                        {p.category}
-                      </span>
-                    </div>
-
-                    <h3 className="font-bold text-xl text-white group-hover:text-indigo-300 transition-colors flex items-center justify-between">
-                      <span>{p.title[l]}</span>
-                      <ArrowUpRight className="w-5 h-5 text-gray-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                    </h3>
-
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
-                      {p.summary[l]}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 border-t border-white/5 flex flex-wrap gap-2">
-                    {p.techStack.slice(0, 3).map((tech) => (
-                      <span key={tech} className="text-xs px-2.5 py-1 rounded-md bg-white/[0.04] text-gray-300 font-mono border border-white/[0.05]">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono text-amber-300">{p.status}</span>
+                  <span className="text-[11px] font-mono text-gray-500">{p.category}</span>
                 </div>
+                <h4 className="font-bold text-white text-base group-hover:text-indigo-300 transition-colors flex items-center justify-between">
+                  <span>{p.title[l]}</span>
+                  <ArrowUpRight className="w-4 h-4 text-gray-500 group-hover:text-indigo-300" />
+                </h4>
+                <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed">
+                  {p.summary[l]}
+                </p>
               </Link>
             ))}
           </div>
@@ -322,141 +235,196 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      {/* HOW WE WORK / STEP PIPELINE */}
-      <section className="relative z-10 px-4 sm:px-6 py-20 border-t border-white/10 bg-[#0D0F17]/60">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+      {/* 4. HOW WE BUILD (VERTICAL PROCESS NARRATIVE SEQUENCE) */}
+      <section className="px-4 sm:px-6 py-24 border-b border-white/10 bg-[#0E1016]">
+        <div className="max-w-7xl mx-auto space-y-12">
+          <div className="max-w-3xl space-y-3">
+            <div className="text-xs font-mono uppercase tracking-widest text-indigo-400">
+              03 / Proses Rekayasa
+            </div>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
               {t.home.how_we_work_title}
             </h2>
-            <p className="text-gray-400 text-base sm:text-lg">
+            <p className="text-gray-400 text-base">
               {t.home.how_we_work_subtitle}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {STEPS.map((key, i) => (
-              <div key={key} className="relative p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600/30 to-cyan-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 font-bold font-mono text-lg shadow-inner">
-                  0{i + 1}
-                </div>
-                <h3 className="font-bold text-white text-lg">{t.home[key]}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{STEP_DESCS[l][i]}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {HOW_WE_BUILD_STEPS.map((item) => (
+              <div key={item.step} className="p-6 rounded-xl bg-[#13161F] border border-white/10 space-y-3">
+                <div className="text-xs font-mono text-indigo-400 font-bold">{item.step}</div>
+                <h3 className="font-bold text-white text-lg">{item.title[l]}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{item.desc[l]}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* AGENT ORCHESTRATION PIPELINE */}
-      <section className="relative z-10 px-4 sm:px-6 py-20 border-t border-white/10">
-        <div className="max-w-7xl mx-auto space-y-12">
+      {/* 5. AI ORCHESTRATION (SIGNATURE ARCHITECTURE MODEL) */}
+      <section className="px-4 sm:px-6 py-24 border-b border-white/10 max-w-7xl mx-auto space-y-12">
+        <div className="max-w-3xl space-y-3">
+          <div className="text-xs font-mono uppercase tracking-widest text-indigo-400">
+            04 / Model Arsitektur Otonom
+          </div>
+          <h2 className="text-3xl font-bold text-white tracking-tight">
+            {t.home.agent_orchestration_title}
+          </h2>
+          <p className="text-gray-400 text-base">
+            {t.home.agent_orchestration_subtitle}
+          </p>
+        </div>
+
+        {/* SYSTEM ARCHITECTURE FLOW DIAGRAM */}
+        <div className="p-8 rounded-xl bg-[#13161F] border border-white/10 space-y-8">
           
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-cyan-400">
-              <Cpu className="w-4 h-4" />
-              <span>Multi-Agent Architecture</span>
+          <div className="flex items-center justify-between border-b border-white/10 pb-4 text-xs font-mono">
+            <span className="text-gray-400 uppercase">Target Multi-Agent Architecture Topology</span>
+            <span className="text-indigo-300">Hermes / Antigravity Pattern</span>
+          </div>
+
+          {/* DESKTOP TOPOLOGY FLOW */}
+          <div className="hidden lg:grid grid-cols-5 gap-4 text-center items-center">
+            
+            {/* Step 1: Initiating Event */}
+            <div className="p-4 rounded bg-white/[0.03] border border-white/10 space-y-2">
+              <div className="text-[11px] font-mono text-gray-400 uppercase">01. Trigger</div>
+              <div className="text-sm font-bold text-white">Task / User Request</div>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              {t.home.agent_orchestration_title}
+
+            {/* Flow Arrow */}
+            <div className="text-xs font-mono text-indigo-400 flex items-center justify-center gap-1">
+              <span>→</span>
+            </div>
+
+            {/* Step 2: CEO Orchestrator */}
+            <div className="p-4 rounded bg-indigo-600/20 border border-indigo-500/40 space-y-2">
+              <div className="text-[11px] font-mono text-indigo-300 uppercase">02. Coordinator</div>
+              <div className="text-sm font-bold text-white">CEO Orchestrator</div>
+            </div>
+
+            {/* Flow Arrow */}
+            <div className="text-xs font-mono text-indigo-400 flex items-center justify-center gap-1">
+              <span>→</span>
+            </div>
+
+            {/* Step 3: Specialist Workers */}
+            <div className="p-4 rounded bg-white/[0.03] border border-white/10 space-y-2">
+              <div className="text-[11px] font-mono text-gray-400 uppercase">03. Workers</div>
+              <div className="text-sm font-bold text-white">Research & Code Agents</div>
+            </div>
+
+          </div>
+
+          {/* CHECKPOINT GATE */}
+          <div className="p-4 rounded bg-amber-500/10 border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+            <div className="flex items-center gap-3 text-amber-300">
+              <UserCheck className="w-5 h-5 flex-shrink-0" />
+              <span>Human Approval Checkpoint Gate (Mandatory Verification before Commit / Deploy)</span>
+            </div>
+            <span className="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              GATE ACTIVE
+            </span>
+          </div>
+
+          {/* MOBILE TOPOLOGY (VERTICAL SEQUENCE) */}
+          <div className="lg:hidden space-y-4 text-xs font-mono">
+            <div className="p-4 rounded bg-white/[0.03] border border-white/10">
+              <span className="text-gray-500 block mb-1">01. INITIATING TRIGGER</span>
+              <span className="text-white font-bold">User Request / System Event</span>
+            </div>
+            <div className="p-4 rounded bg-indigo-600/20 border border-indigo-500/40">
+              <span className="text-indigo-300 block mb-1">02. CEO COORDINATOR</span>
+              <span className="text-white font-bold">Task Decomposition & Context Assignment</span>
+            </div>
+            <div className="p-4 rounded bg-white/[0.03] border border-white/10">
+              <span className="text-gray-500 block mb-1">03. SPECIALIST EXECUTION</span>
+              <span className="text-white font-bold">Research, Writing, Code Generation, QC Audit</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 6. RESEARCH AND EXPERIMENTS (LAB JOURNAL INDEX) */}
+      <section className="px-4 sm:px-6 py-24 border-b border-white/10 max-w-7xl mx-auto space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div className="text-xs font-mono uppercase tracking-widest text-indigo-400 mb-2">
+              05 / Catatan Riset & Lab Notes
+            </div>
+            <h2 className="text-3xl font-bold text-white tracking-tight">
+              {t.articles.title}
             </h2>
-            <p className="text-gray-400 text-base sm:text-lg">
-              {t.home.agent_orchestration_subtitle}
-            </p>
           </div>
+          <Link href={`/${l}/articles`} className="text-sm font-semibold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+            <span>{l === 'id' ? 'Lihat Semua Catatan' : 'View All Research Notes'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
-          {/* AGENTS GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {AGENTS.map((agent, i) => (
-              <div
-                key={agent.name}
-                className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3 hover:border-indigo-500/40 transition-colors"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-gray-500">AGENT #{i + 1}</span>
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${agent.color}`}>
-                    Active
-                  </span>
+        <div className="space-y-4">
+          {[
+            {
+              date: '2026-08',
+              title: l === 'id' ? 'Mengapa AI Agents Butuh Orchestration, Bukan Hanya Prompts' : 'Why AI Agents Need Orchestration, Not Just Prompts',
+              category: 'Architecture',
+              stage: 'Draft Preparation',
+            },
+            {
+              date: '2026-07',
+              title: l === 'id' ? 'Membangun Human-in-the-Loop Content Automation' : 'Building a Human-in-the-Loop Content Automation System',
+              category: 'Automation',
+              stage: 'Research Track',
+            },
+            {
+              date: '2026-06',
+              title: l === 'id' ? 'Pelajaran dari Membangun Multi-Agent Workflows' : 'Lessons From Building Multi-Agent Workflows',
+              category: 'Case Study',
+              stage: 'In Review',
+            },
+          ].map((item) => (
+            <div key={item.title} className="p-5 rounded-xl bg-[#13161F] border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-3 text-xs font-mono text-gray-500">
+                  <span>{item.date}</span>
+                  <span>•</span>
+                  <span className="text-indigo-400">{item.category}</span>
                 </div>
-                <h3 className="font-bold text-white text-lg">{agent.name}</h3>
-                <p className="text-xs text-gray-400 font-mono">{agent.role}</p>
+                <h3 className="font-bold text-white text-base leading-snug">{item.title}</h3>
               </div>
-            ))}
-          </div>
-
+              <span className="text-xs font-mono px-3 py-1 rounded bg-white/[0.04] text-gray-400 border border-white/10 self-start md:self-auto">
+                {item.stage}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ARTICLES / RESEARCH PREVIEW */}
-      <section className="relative z-10 px-4 sm:px-6 py-20 border-t border-white/10 bg-[#0D0F17]/60">
-        <div className="max-w-7xl mx-auto space-y-12">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                {t.articles.title}
-              </h2>
-              <p className="text-gray-400 mt-2 text-base">
-                {t.articles.subtitle}
-              </p>
-            </div>
-            <Link href={`/${l}/articles`} className="text-indigo-400 hover:text-indigo-300 font-semibold text-sm flex items-center gap-1">
-              <span>View All Articles</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              l === 'id' ? 'Mengapa AI Agents Butuh Orchestration, Bukan Hanya Prompts' : 'Why AI Agents Need Orchestration, Not Just Prompts',
-              l === 'id' ? 'Membangun Human-in-the-Loop Content Automation' : 'Building a Human-in-the-Loop Content Automation System',
-              l === 'id' ? 'Pelajaran dari Membangun Multi-Agent Workflows' : 'Lessons From Building Multi-Agent Workflows',
-            ].map((title) => (
-              <div key={title} className="p-7 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 hover:border-indigo-500/30 transition-colors">
-                <span className="inline-block text-xs px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono">
-                  {t.articles.coming_soon}
-                </span>
-                <h3 className="font-bold text-lg text-gray-200 leading-snug">{title}</h3>
-                <p className="text-xs text-gray-500 font-mono">BirruLabs AI Engineering Insights</p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* STARTUP CTA SECTION */}
-      <section className="relative z-10 px-4 sm:px-6 py-24 border-t border-white/10">
-        <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden p-10 sm:p-16 text-center border border-indigo-500/30 bg-gradient-to-b from-indigo-950/50 via-[#121520] to-[#0B0D13] shadow-2xl shadow-indigo-950/60">
-          
-          <div className="relative z-10 space-y-6 max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              {t.home.startup_cta_title}
-            </h2>
-            <p className="text-gray-300 text-lg sm:text-xl leading-relaxed">
-              {t.home.startup_cta_subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link
-                href={`/${l}/contact`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold text-base shadow-lg shadow-indigo-500/30 transition-all duration-300 active:scale-95"
-              >
-                <span>{t.home.startup_cta_primary}</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href={`/${l}/contact`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white/[0.05] hover:bg-white/10 border border-white/10 text-white font-bold text-base transition-all duration-300 active:scale-95"
-              >
-                <span>{t.home.startup_cta_secondary}</span>
-              </Link>
-            </div>
-          </div>
-
+      {/* 7. INVITATION (QUIET COLLABORATION CTA) */}
+      <section className="px-4 sm:px-6 py-24 max-w-5xl mx-auto text-center space-y-6">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          {l === 'id' ? 'Mulai Kolaborasi Teruji' : 'Start a Verifiable Project'}
+        </h2>
+        <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          {l === 'id'
+            ? 'Diskusikan arsitektur agen, software local-first, atau kebutuhan otomatisasi bisnis Anda bersama BirruLabs.'
+            : 'Discuss custom agent architectures, local-first business software, or verification requirements with BirruLabs.'}
+        </p>
+        <div className="pt-4">
+          <Link
+            href={`/${l}/contact`}
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-colors"
+          >
+            <span>{l === 'id' ? 'Hubungi BirruLabs' : 'Contact BirruLabs'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
     </div>
   );
 }
+
 
