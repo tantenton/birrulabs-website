@@ -77,28 +77,42 @@ export default async function FAQPage({ params }: { params: Promise<{ locale: st
   const isID = l === 'id';
 
   return (
-    <div className="min-h-screen bg-[#0F1115] text-[#F0F2F5]">
-      <section className="px-4 py-20 border-b border-[#2D3036]">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">FAQ</h1>
-          <p className="text-xl text-[#A3A6AC]">
+    <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
+      <section
+        className="relative overflow-hidden"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.1), transparent)' }}
+      >
+        <div className="absolute inset-0 bg-grid opacity-25" aria-hidden="true" />
+        <div className="relative section-container py-20 md:py-28">
+          <h1 className="text-[40px] md:text-[56px] leading-[1.05] tracking-[-0.02em] font-bold text-[#e2e2e8] mb-4">
+            FAQ
+          </h1>
+          <p className="text-[20px] leading-[1.65] text-[#c7c4d7] max-w-2xl">
             {isID ? 'Pertanyaan yang sering ditanyakan.' : 'Frequently asked questions.'}
           </p>
         </div>
       </section>
 
-      <section className="px-4 py-16">
+      <section className="section-container py-16 md:py-20">
         <div className="max-w-3xl mx-auto space-y-4">
           {FAQS[l].map((faq, i) => (
             <details
               key={i}
-              className="group p-6 rounded-xl bg-[#16191F] border border-[#2D3036] hover:border-indigo-500/30 transition-colors"
+              className="group rounded-xl bg-[#161920] border border-[rgba(255,255,255,0.07)]
+                        hover:border-[rgba(99,102,241,0.3)] transition-all duration-300"
             >
-              <summary className="flex items-center justify-between gap-4 cursor-pointer list-none font-semibold">
-                {faq.q}
-                <span className="text-indigo-400 flex-shrink-0 text-xl group-open:rotate-45 transition-transform">+</span>
+              <summary className="flex items-center justify-between gap-4 cursor-pointer list-none p-6">
+                <span className="text-[16px] md:text-[17px] leading-[1.4] font-semibold text-[#e2e2e8]">
+                  {faq.q}
+                </span>
+                <span
+                  className="text-[#6366F1] flex-shrink-0 text-[20px] transition-transform duration-200 group-open:rotate-45"
+                  aria-hidden="true"
+                >
+                  +
+                </span>
               </summary>
-              <p className="mt-4 text-[#A3A6AC] leading-relaxed">{faq.a}</p>
+              <p className="px-6 pb-6 text-[15px] leading-[1.7] text-[#c7c4d7]">{faq.a}</p>
             </details>
           ))}
         </div>

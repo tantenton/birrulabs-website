@@ -68,13 +68,17 @@ export default async function TechStackPage({ params }: { params: Promise<{ loca
   const isID = l === 'id';
 
   return (
-    <div className="min-h-screen bg-[#0F1115] text-[#F0F2F5]">
-      <section className="px-4 py-20 border-b border-[#2D3036]">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
+      <section
+        className="relative overflow-hidden"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.1), transparent)' }}
+      >
+        <div className="absolute inset-0 bg-grid opacity-25" aria-hidden="true" />
+        <div className="relative section-container py-20 md:py-28">
+          <h1 className="text-[40px] md:text-[56px] leading-[1.05] tracking-[-0.02em] font-bold text-[#e2e2e8] mb-4">
             {isID ? 'Tech Stack' : 'Technology Stack'}
           </h1>
-          <p className="text-xl text-[#A3A6AC]">
+          <p className="text-[20px] leading-[1.65] text-[#c7c4d7] max-w-2xl">
             {isID
               ? 'Tools dan teknologi yang kami gunakan di BirruLabs.'
               : 'Tools and technologies we use at BirruLabs.'}
@@ -82,48 +86,57 @@ export default async function TechStackPage({ params }: { params: Promise<{ loca
         </div>
       </section>
 
-      <section className="px-4 py-16">
-        <div className="max-w-5xl mx-auto space-y-12">
+      <section className="section-container py-16 md:py-20">
+        <div className="max-w-4xl mx-auto space-y-12">
           {STACK.map((cat) => (
             <div key={cat.category_en}>
-              <h2 className="text-xl font-semibold mb-6 text-indigo-400">
+              <h2 className="text-[20px] font-semibold text-[#e2e2e8] mb-6 flex items-center gap-2">
+                <span className="font-mono text-[11px] text-[#6366F1] tracking-[0.03em] uppercase">
+                  0{STACK.indexOf(cat) + 1}
+                </span>
                 {isID ? cat.category_id : cat.category_en}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {cat.items.map((item) => (
-                  <div key={item.name} className="p-4 rounded-lg bg-[#16191F] border border-[#2D3036]">
-                    <h3 className="font-semibold text-[#F0F2F5] mb-1">{item.name}</h3>
-                    <p className="text-sm text-[#6C6F75]">{isID ? item.desc_id : item.desc_en}</p>
+                  <div
+                    key={item.name}
+                    className="rounded-xl bg-[#161920] border border-[rgba(255,255,255,0.07)]
+                              hover:border-[rgba(99,102,241,0.3)] transition-all duration-300 p-5"
+                  >
+                    <h3 className="font-semibold text-[#e2e2e8] mb-2">{item.name}</h3>
+                    <p className="text-[13px] leading-[1.6] text-[#c7c4d7]">
+                      {isID ? item.desc_id : item.desc_en}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
           ))}
-        </div>
 
-        <div className="max-w-5xl mx-auto mt-12 p-5 rounded-xl bg-[#16191F] border border-[#2D3036]">
-          <h3 className="font-semibold mb-2 text-[#F0F2F5]">
-            {isID ? 'Prinsip Pemilihan Tech Stack' : 'Tech Stack Selection Principles'}
-          </h3>
-          <ul className="space-y-2 text-sm text-[#A3A6AC]">
-            {(isID ? [
-              'Audit semua dependency sebelum dipakai',
-              'Preferensi package dengan maintenance aktif',
-              'Minimal dependency — jangan tambah yang tidak perlu',
-              'Versi yang stable dan production-ready',
-              'Security-first: tidak ada package dengan known vulnerabilities kritis',
-            ] : [
-              'Audit all dependencies before use',
-              'Prefer packages with active maintenance',
-              'Minimal dependencies — do not add what is not needed',
-              'Stable, production-ready versions',
-              'Security-first: no packages with critical known vulnerabilities',
-            ]).map((p) => (
-              <li key={p} className="flex items-start gap-2">
-                <span className="text-indigo-400 mt-0.5">•</span> {p}
-              </li>
-            ))}
-          </ul>
+          <div className="rounded-xl bg-[#161920] border border-[rgba(255,255,255,0.07)]
+                            hover:border-[rgba(99,102,241,0.3)] transition-all duration-300 p-6">
+            <h3 className="font-semibold text-[#e2e2e8] mb-4">Prinsip Pemilihan Tech Stack</h3>
+            <ul className="space-y-3">
+              {(isID ? [
+                'Audit semua dependency sebelum dipakai',
+                'Preferensi package dengan maintenance aktif',
+                'Minimal dependency — jangan tambah yang tidak perlu',
+                'Versi yang stable dan production-ready',
+                'Security-first: tidak ada package dengan known vulnerabilities kritis',
+              ] : [
+                'Audit all dependencies before use',
+                'Prefer packages with active maintenance',
+                'Minimal dependencies — do not add what is not needed',
+                'Stable, production-ready versions',
+                'Security-first: no packages with critical known vulnerabilities',
+              ]).map((p) => (
+                <li key={p} className="flex items-start gap-3 text-[14px] text-[#c7c4d7]">
+                  <span className="text-[#6366F1] mt-0.5 flex-shrink-0" aria-hidden="true">✓</span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
     </div>

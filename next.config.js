@@ -1,5 +1,10 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Fix: force Next.js to use this directory as workspace root
+  // Prevents vendor-chunk resolution errors caused by parent dir's package-lock.json
+  outputFileTracingRoot: path.join(__dirname),
   images: {
     unoptimized: true,
     remotePatterns: [

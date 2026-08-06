@@ -25,7 +25,10 @@ export default async function LocaleLayout({
   return (
     <div lang={locale} className={`${inter.variable} ${jetbrains.variable}`}>
       <Navbar locale={l} />
-      <main>{children}</main>
+      {/* pt-16 offsets the fixed navbar (h-16) */}
+      <div className="pt-16">
+        {children}
+      </div>
       <Footer locale={l} />
     </div>
   );

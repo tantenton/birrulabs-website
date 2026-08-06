@@ -32,7 +32,7 @@ export default function MobileMenu({ locale, isOpen, onClose, links }: MobileMen
   return (
     <div
       id="mobile-menu"
-      className="fixed inset-0 z-30 bg-[#0F1115] flex flex-col pt-20"
+      className="fixed inset-0 z-30 bg-surface flex flex-col pt-20"
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation menu"
@@ -43,7 +43,9 @@ export default function MobileMenu({ locale, isOpen, onClose, links }: MobileMen
             key={href}
             href={href}
             onClick={onClose}
-            className="flex items-center px-4 py-4 rounded-xl text-lg font-medium text-[#A3A6AC] hover:text-[#F0F2F5] hover:bg-[#16191F] transition-colors min-h-[56px]"
+            className="flex items-center px-4 py-4 rounded-lg text-lg font-medium
+                       text-text-secondary hover:text-text-primary
+                       hover:bg-surface-elevated transition-colors min-h-[56px]"
           >
             {label}
           </Link>
@@ -52,7 +54,7 @@ export default function MobileMenu({ locale, isOpen, onClose, links }: MobileMen
           <Link
             href={`/${locale}/contact`}
             onClick={onClose}
-            className="flex items-center justify-center w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors min-h-[56px]"
+            className="btn-primary w-full justify-center py-4 text-base min-h-[56px]"
           >
             {locale === 'id' ? 'Hubungi Kami' : 'Contact Us'}
           </Link>

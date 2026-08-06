@@ -34,6 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'BirruLabs' }],
   creator: 'BirruLabs',
   publisher: 'BirruLabs',
+  manifest: '/manifest.json',
   robots: {
     index: true,
     follow: true,
@@ -54,6 +55,13 @@ export const metadata: Metadata = {
     description:
       'Building practical AI systems that work beyond the demo.',
   },
+  alternates: {
+    canonical: 'https://birrulabs.biz.id',
+    languages: {
+      'id': 'https://birrulabs.biz.id/id',
+      'en': 'https://birrulabs.biz.id/en',
+    },
+  },
 };
 
 export default function RootLayout({
@@ -63,6 +71,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" suppressHydrationWarning>
+      <head>
+        <link rel="alternate" type="application/rss+xml" title="BirruLabs RSS Feed" href="/rss.xml" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "BirruLabs",
+              "url": "https://birrulabs.biz.id",
+              "logo": "https://birrulabs.biz.id/icon-512.png",
+              "description": "Engineering studio building autonomous AI agents, workflow automation, and creative pipelines.",
+              "sameAs": [
+                "https://github.com/tantenton",
+                "https://twitter.com/birrulabs"
+              ],
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "email": "contact@birrulabs.biz.id",
+                "contactType": "customer service"
+              }
+            })
+          }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
