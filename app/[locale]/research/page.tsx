@@ -63,25 +63,23 @@ const EXPERIMENTS: Record<Locale, { title: string; status: string; desc: string;
   ],
 };
 
-const STATUS_COLORS: Record<string, string> = {
-  'Research': 'bg-purple-500/10 text-purple-400 border border-purple-500/20',
-  'Experimental': 'bg-pink-500/10 text-pink-400 border border-pink-500/20',
-  'Prototype': 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20',
-};
-
 export default async function ResearchPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const l = locale as Locale;
   const isID = l === 'id';
 
   return (
-    <div className="min-h-screen bg-[#0F1115] text-[#F0F2F5]">
-      <section className="px-4 py-20 border-b border-[#2D3036]">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
+      <section
+        className="relative overflow-hidden"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.1), transparent)' }}
+      >
+        <div className="absolute inset-0 bg-grid opacity-25" aria-hidden="true" />
+        <div className="relative section-container py-20 md:py-28">
+          <h1 className="text-[40px] md:text-[56px] leading-[1.05] tracking-[-0.02em] font-bold text-[#e2e2e8] mb-4">
             {isID ? 'Research & Eksperimen' : 'Research & Experiments'}
           </h1>
-          <p className="text-xl text-[#A3A6AC]">
+          <p className="text-[20px] leading-[1.65] text-[#c7c4d7] max-w-2xl">
             {isID
               ? 'Area penelitian dan eksperimen yang sedang kami eksplorasi.'
               : 'Research areas and experiments we are currently exploring.'}
@@ -89,20 +87,30 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <section className="px-4 py-16">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="section-container py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {EXPERIMENTS[l].map((exp) => (
-            <div key={exp.title} className="p-6 rounded-xl bg-[#16191F] border border-[#2D3036]">
+            <div
+              key={exp.title}
+              className="rounded-xl bg-[#161920] border border-[rgba(255,255,255,0.07)]
+                        hover:border-[rgba(99,102,241,0.3)] transition-all duration-300 p-6"
+            >
               <div className="flex items-center gap-3 mb-4">
-                <span className={`text-xs px-2 py-1 rounded-full font-medium ${STATUS_COLORS[exp.status]}`}>
+                <span className="font-mono text-[11px] font-medium tracking-[0.12em] uppercase text-[#6366F1] border
+                                 border-[rgba(99,102,241,0.3)] bg-[rgba(99,102,241,0.1)] px-2.5 py-1 rounded">
                   {exp.status}
                 </span>
               </div>
-              <h2 className="text-xl font-semibold mb-3">{exp.title}</h2>
-              <p className="text-[#A3A6AC] text-sm leading-relaxed mb-4">{exp.desc}</p>
+              <h2 className="text-[20px] leading-[1.3] font-semibold text-[#e2e2e8] mb-3">{exp.title}</h2>
+              <p className="text-[14px] leading-[1.7] text-[#c7c4d7] mb-5">{exp.desc}</p>
               <div className="flex flex-wrap gap-2">
                 {exp.tags.map((tag) => (
-                  <span key={tag} className="text-xs px-2 py-1 rounded bg-[#1A1D23] text-[#6C6F75]">
+                  <span
+                    key={tag}
+                    className="font-mono text-[11px] tracking-[0.03em] text-[#908fa0]
+                              bg-[rgba(10,12,16,0.6)] border border-[rgba(255,255,255,0.08)]
+                              px-2.5 py-1 rounded"
+                  >
                     #{tag}
                   </span>
                 ))}
@@ -111,12 +119,11 @@ export default async function ResearchPage({ params }: { params: Promise<{ local
           ))}
         </div>
 
-        <div className="max-w-5xl mx-auto mt-12 p-5 rounded-xl bg-indigo-500/5 border border-indigo-500/20">
-          <p className="text-sm text-[#A3A6AC]">
-            {isID
-              ? '🔬 Semua eksperimen ini bersifat exploratory. Tidak semua akan menjadi product. Hasil research dipublikasikan melalui artikel dan build-in-public updates.'
-              : '🔬 All these experiments are exploratory. Not all will become products. Research findings are published through articles and build-in-public updates.'}
-          </p>
+        <div className="max-w-3xl mx-auto mt-12 p-6 rounded-xl bg-[#0F1215] border border-[rgba(99,102,241,0.2)]
+                        font-mono text-[12px] text-[#908fa0] tracking-[0.02em]">
+          {isID
+            ? 'Semua eksperimen ini bersifat exploratory. Tidak semua akan menjadi product. Hasil research dipublikasikan melalui artikel dan build-in-public updates.'
+            : 'All these experiments are exploratory. Not all will become products. Research findings are published through articles and build-in-public updates.'}
         </div>
       </section>
     </div>
