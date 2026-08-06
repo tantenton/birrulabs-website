@@ -57,8 +57,39 @@ export default async function ArticleDetailPage({
   const prevArticle = currentIdx > 0 ? ARTICLES[currentIdx - 1] : null;
   const nextArticle = currentIdx < ARTICLES.length - 1 ? ARTICLES[currentIdx + 1] : null;
 
+  const baseUrl = 'https://birrulabs.biz.id';
+  const articleUrl = `${baseUrl}/${l}/articles/${slug}`;
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title[l],
+    description: article.excerpt[l],
+    author: { '@type': 'Person', name: article.author },
+    publisher: {
+      '@type': 'Organization',
+      name: 'BirruLabs',
+      url: baseUrl,
+    },
+    datePublished: article.publishedAt,
+    url: articleUrl,
+    inLanguage: l === 'id' ? 'id-ID' : 'en-US',
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/${l}` },
+      { '@type': 'ListItem', position: 2, name: l === 'id' ? 'Artikel' : 'Articles', item: `${baseUrl}/${l}/articles` },
+      { '@type': 'ListItem', position: 3, name: article.title[l], item: articleUrl },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <ReadingProgress />
 
       {/* BREADCRUMB */}

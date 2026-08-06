@@ -1,137 +1,185 @@
-import { Search, Code2, CheckSquare } from 'lucide-react';
+import { Search, Code2, CheckSquare, ArrowRight, Cpu } from 'lucide-react';
 import type { Locale } from '@/lib/translations';
 
 interface AgentOrchestrationProps {
   locale: Locale;
 }
 
-const AGENT_ROLES = ['Research', 'Product', 'Frontend', 'Backend', 'QA', 'Security', 'DevOps'];
+const AGENTS = [
+  { id: 'research',  label: 'Research',  status: 'active',    color: '#10B981', delay: '0s' },
+  { id: 'product',   label: 'Product',   status: 'planning',  color: '#6366F1', delay: '0.3s' },
+  { id: 'frontend',  label: 'Frontend',  status: 'building',  color: '#F59E0B', delay: '0.6s' },
+  { id: 'qa',        label: 'QA',        status: 'verifying', color: '#8B5CF6', delay: '0.9s' },
+  { id: 'deploy',    label: 'Deploy',    status: 'ready',     color: '#06B6D4', delay: '1.2s' },
+];
 
-const FEATURES = [
-  {
-    icon: Search,
-    iconColor: 'text-[#6366F1]',
-    titleId: 'Research & Konteks',
-    titleEn: 'Research & Context',
-    descId: 'Agent yang menjelajahi sumber data, mem-parsing dokumentasi, dan membangun landasan faktual.',
-    descEn: 'Agents dedicated to traversing data sources, parsing documentation, and establishing factual grounding.',
-  },
-  {
-    icon: Code2,
-    iconColor: 'text-[#10B981]',
-    titleId: 'Logika & Sintesis',
-    titleEn: 'Logic & Synthesis',
-    descId: 'Agent logika yang menulis kode, menghasilkan struktur, dan mensintesis data menjadi format yang actionable.',
-    descEn: 'Specialized logic agents that write code, generate structures, and synthesize researched data into actionable formats.',
-  },
-  {
-    icon: CheckSquare,
-    iconColor: 'text-[#908fa0]',
-    titleId: 'Validasi & QA',
-    titleEn: 'Validation & QA',
-    descId: 'Agent verifikasi independen yang memeriksa output terhadap kriteria sukses yang ketat.',
-    descEn: 'Independent verifier agents that review outputs against strict success criteria before returning results.',
-  },
+const STATUS_COLOR: Record<string, string> = {
+  active:    '#10B981',
+  planning:  '#6366F1',
+  building:  '#F59E0B',
+  verifying: '#8B5CF6',
+  ready:     '#06B6D4',
+};
+
+const WORKFLOW = [
+  { step: '01', label: 'Research',  icon: Search },
+  { step: '02', label: 'Design',    icon: Cpu },
+  { step: '03', label: 'Build',     icon: Code2 },
+  { step: '04', label: 'Verify',    icon: CheckSquare },
+  { step: '05', label: 'Ship',      icon: ArrowRight },
 ];
 
 export default function AgentOrchestration({ locale }: AgentOrchestrationProps) {
-  const isId = locale === 'id';
+  const isID = locale === 'id';
 
   return (
-    <section className="section-divider">
-      <div className="section-container py-24 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="py-24 md:py-32 section-divider">
+      <div className="section-container">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-          {/* Left — static diagram */}
+          {/* Left — copy */}
+          <div>
+            <p className="label-mono mb-4">Agentic Systems</p>
+            <h2 className="text-[32px] md:text-[40px] leading-[1.15] tracking-[-0.015em]
+                           font-semibold text-[#e2e2e8] mb-6">
+              {isID ? 'Orkestrasi Multi-Agent' : 'Multi-Agent Orchestration'}
+            </h2>
+            <p className="text-[16px] leading-[1.75] text-[#c7c4d7] mb-8">
+              {isID
+                ? 'Setiap workflow dijalankan oleh agen yang terspesialisasi. CEO orchestrator mendelegasikan ke worker agents — research, engineering, QA, publishing — dengan human-in-the-loop approval di setiap checkpoint kritis.'
+                : 'Every workflow is run by specialized agents. The CEO orchestrator delegates to worker agents — research, engineering, QA, publishing — with human-in-the-loop approval at every critical checkpoint.'}
+            </p>
+
+            {/* Workflow steps */}
+            <div className="flex items-center gap-0 flex-wrap">
+              {WORKFLOW.map(({ step, label, icon: Icon }, i) => (
+                <div key={step} className="flex items-center">
+                  <div className="flex flex-col items-center gap-1.5 group">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center
+                                    bg-[rgba(99,102,241,0.08)] border border-[rgba(99,102,241,0.2)]
+                                    group-hover:bg-[rgba(99,102,241,0.16)] group-hover:border-[rgba(99,102,241,0.4)]
+                                    transition-all duration-200">
+                      <Icon className="w-4 h-4 text-[#6366F1]" aria-hidden="true" />
+                    </div>
+                    <span className="font-mono text-[10px] text-[#908fa0] tracking-[0.06em]">{label}</span>
+                  </div>
+                  {i < WORKFLOW.length - 1 && (
+                    <div className="w-6 h-px bg-[rgba(99,102,241,0.25)] mx-1 mb-5" aria-hidden="true" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — live orchestration diagram */}
           <div
-            className="relative h-[480px] w-full rounded-xl overflow-hidden
-                       border border-[rgba(255,255,255,0.06)]
-                       bg-[#161920] order-2 lg:order-1"
-            aria-hidden="true"
+            className="relative h-[360px] rounded-xl overflow-hidden
+                       bg-[#161920] border border-[rgba(255,255,255,0.08)]
+                       shadow-[0_0_40px_rgba(99,102,241,0.08)]"
+            aria-label="Agent orchestration diagram"
+            role="img"
           >
-            {/* Grid bg */}
-            <div className="absolute inset-0 bg-grid opacity-40" />
+            <div className="absolute inset-0 bg-grid opacity-30" aria-hidden="true" />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'radial-gradient(circle at 50% 50%, rgba(99,102,241,0.08), transparent 70%)' }}
+              aria-hidden="true"
+            />
+
+            {/* CEO Orchestrator center */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {/* Connection lines SVG */}
+              <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
+                {AGENTS.map(({ id, color }, i) => {
+                  const angle = (i / AGENTS.length) * 2 * Math.PI - Math.PI / 2;
+                  const r = 110;
+                  const cx = 50, cy = 50;
+                  const x2 = cx + Math.cos(angle) * (r / 3.6);
+                  const y2 = cy + Math.sin(angle) * (r / 3.0);
+                  return (
+                    <line
+                      key={id}
+                      x1="50%" y1="50%"
+                      x2={`${x2}%`} y2={`${y2}%`}
+                      stroke={color}
+                      strokeOpacity="0.2"
+                      strokeWidth="1"
+                      strokeDasharray="4 4"
+                    />
+                  );
+                })}
+              </svg>
+
+              {/* CEO node */}
+              <div
+                className="relative z-10 flex flex-col items-center justify-center
+                            w-20 h-20 rounded-xl
+                            bg-[rgba(99,102,241,0.15)]
+                            border-2 border-[rgba(99,102,241,0.45)]
+                            shadow-[0_0_32px_rgba(99,102,241,0.35)]"
+                style={{ animation: 'pulse 3s ease-in-out infinite' }}
+              >
+                <Cpu className="w-7 h-7 text-[#6366F1]" aria-hidden="true" />
+                <span className="font-mono text-[9px] text-[#6366F1] tracking-widest mt-1 font-semibold">CEO</span>
+              </div>
+
+              {/* Worker agents */}
+              {AGENTS.map(({ id, label, status, color, delay }, i) => {
+                const angle = (i / AGENTS.length) * 2 * Math.PI - Math.PI / 2;
+                const r = 130;
+                const x = Math.cos(angle) * r;
+                const y = Math.sin(angle) * r;
+                return (
+                  <div
+                    key={id}
+                    className="absolute z-10 flex flex-col items-center gap-1.5"
+                    style={{
+                      left: `calc(50% + ${x}px)`,
+                      top: `calc(50% + ${y}px)`,
+                      transform: 'translate(-50%, -50%)',
+                      animation: `pulse 3s ease-in-out infinite`,
+                      animationDelay: delay,
+                    }}
+                  >
+                    <div
+                      className="w-12 h-12 rounded-xl flex flex-col items-center justify-center
+                                 border-2 transition-all duration-300 hover:scale-110"
+                      style={{
+                        backgroundColor: `${color}18`,
+                        borderColor: `${color}40`,
+                        boxShadow: `0 0 20px ${color}25`,
+                      }}
+                    >
+                      <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: color }} aria-hidden="true" />
+                    </div>
+                    <span className="font-mono text-[10px] text-[#c7c4d7] whitespace-nowrap font-medium">{label}</span>
+                    <span
+                      className="font-mono text-[9px] px-1.5 py-0.5 rounded"
+                      style={{
+                        color: STATUS_COLOR[status],
+                        backgroundColor: `${STATUS_COLOR[status]}18`,
+                        border: `1px solid ${STATUS_COLOR[status]}30`,
+                      }}
+                    >
+                      {status}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
 
             {/* Corner label */}
-            <div className="absolute top-4 left-4 z-10">
-              <span className="font-mono text-[11px] text-[#908fa0]
+            <div className="absolute top-4 left-4 z-20">
+              <span className="font-mono text-[11px] text-[#c7c4d7]
                               bg-[rgba(10,12,16,0.9)] px-3 py-1.5 rounded
-                              border border-[rgba(255,255,255,0.06)] backdrop-blur-sm">
-                System.Schematic.01
+                              border border-[rgba(99,102,241,0.2)] backdrop-blur-sm">
+                {isID ? '// sistem aktif (simulasi visual)' : '// system active (visual simulation)'}
               </span>
             </div>
 
-            {/* Agent stack diagram */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-8">
-              {AGENT_ROLES.map((role, i) => (
-                <div
-                  key={role}
-                  className="flex items-center gap-3 w-full max-w-xs"
-                  style={{
-                    transform: `translateX(${Math.sin(i * 0.6) * 16}px)`,
-                    opacity: 1 - i * 0.06,
-                  }}
-                >
-                  {/* Pulse dot */}
-                  <div
-                    className="w-1.5 h-1.5 rounded-full bg-[#10B981] flex-shrink-0"
-                    style={{
-                      opacity: 0.5 + (AGENT_ROLES.length - i) * 0.07,
-                    }}
-                  />
-                  {/* Bar */}
-                  <div
-                    className="flex-1 h-10 rounded-lg border border-[rgba(99,102,241,0.15)]
-                               bg-[rgba(30,48,36,0.4)] backdrop-blur-sm
-                               flex items-center px-4 gap-2
-                               hover:border-[rgba(99,102,241,0.25)] transition-colors"
-                  >
-                    <span className="font-mono text-[13px] text-[#c7c4d7]">{role}</span>
-                    <div className="ml-auto w-1 h-4 rounded-full bg-[rgba(16,185,129,0.5)]" />
-                  </div>
-                </div>
-              ))}
-
-              {/* Bottom connector */}
-              <div className="w-px h-8 bg-gradient-to-b from-[rgba(99,102,241,0.25)] to-transparent mt-2" />
-              <div className="w-24 h-px bg-gradient-to-r from-transparent via-[rgba(99,102,241,0.3)] to-transparent" />
-            </div>
-
             {/* Bottom fade */}
-            <div className="absolute bottom-0 inset-x-0 h-24
-                            bg-gradient-to-t from-[#161920] to-transparent" />
-          </div>
-
-          {/* Right — text */}
-          <div className="order-1 lg:order-2">
-            <p className="label-mono mb-4">Agentic Systems</p>
-            <h2 className="text-[32px] md:text-[40px] leading-[1.15] tracking-[-0.015em]
-                           font-semibold text-[#e2e2e8] mb-5">
-              {isId ? 'Orkestrasi Multi-Agent' : 'Agentic Orchestration'}
-            </h2>
-            <p className="text-[18px] leading-[1.65] text-[#c7c4d7] mb-12">
-              {isId
-                ? 'Kami merancang sistem multi-agent di mana persona AI yang terspesialisasi berkolaborasi untuk menyelesaikan tugas kompleks. Dengan memisahkan penalaran ke peran spesifik, kami mencapai keandalan lebih tinggi dan output yang deterministik.'
-                : 'We design multi-agent systems where specialized AI personas collaborate to solve complex tasks. By segmenting reasoning into specific roles, we achieve higher reliability and deterministic outputs.'}
-            </p>
-
-            <div className="flex flex-col gap-8">
-              {FEATURES.map(({ icon: Icon, iconColor, titleId, titleEn, descId, descEn }) => (
-                <div key={titleEn} className="flex gap-4">
-                  <div className="mt-0.5 flex-shrink-0">
-                    <Icon className={`w-5 h-5 ${iconColor}`} aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h4 className="text-[16px] leading-[1.4] font-semibold text-[#e2e2e8] mb-1.5">
-                      {isId ? titleId : titleEn}
-                    </h4>
-                    <p className="text-[14px] leading-[1.6] text-[#c7c4d7]">
-                      {isId ? descId : descEn}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="absolute bottom-0 inset-x-0 h-16
+                            bg-gradient-to-t from-[#161920] to-transparent" aria-hidden="true" />
           </div>
 
         </div>

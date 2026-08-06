@@ -90,13 +90,13 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   ];
 
   return (
-    <div className="min-h-screen bg-[#0F1115] text-[#F0F2F5]">
-      <section className="px-4 py-20 border-b border-[#2D3036]">
-        <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+    <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
+      <section className="px-4 py-20 border-b border-[rgba(255,255,255,0.07)]" style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.1), transparent)' }}>
+        <div className="max-w-[1120px] mx-auto px-5 md:px-12">
+          <h1 className="text-[40px] md:text-[56px] leading-[1.05] tracking-[-0.02em] font-bold mb-4">
             {isID ? 'Layanan & Kapabilitas' : 'Services & Capabilities'}
           </h1>
-          <p className="text-xl text-[#A3A6AC]">
+          <p className="text-xl text-[#c7c4d7]">
             {isID
               ? 'Apa yang bisa kami bangun bersama Anda.'
               : 'What we can build together with you.'}
@@ -105,18 +105,18 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
       </section>
 
       <section className="px-4 py-16">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map(({ icon: Icon, color, bg, title, desc, items }) => (
-            <div key={title} className="p-6 rounded-xl bg-[#16191F] border border-[#2D3036] hover:border-indigo-500/30 transition-colors">
+            <div key={title} className="rounded-xl bg-[#161920] border border-[rgba(255,255,255,0.07)] hover:border-[rgba(99,102,241,0.3)] transition-all duration-300 p-6">
               <div className={`inline-flex p-3 rounded-lg ${bg} mb-4`}>
                 <Icon className={`w-6 h-6 ${color}`} aria-hidden="true" />
               </div>
               <h2 className="text-lg font-semibold mb-3">{title}</h2>
-              <p className="text-[#A3A6AC] text-sm leading-relaxed mb-4">{desc}</p>
+              <p className="text-[#c7c4d7] text-sm leading-relaxed mb-4">{desc}</p>
               <ul className="space-y-2">
                 {items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm text-[#6C6F75]">
-                    <span className="text-indigo-400 mt-0.5">•</span> {item}
+                  <li key={item} className="flex items-start gap-2 text-sm text-[#908fa0]">
+                    <span className="text-[#6366F1] mt-0.5">•</span> {item}
                   </li>
                 ))}
               </ul>
@@ -124,18 +124,18 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
           ))}
         </div>
 
-        <div className="max-w-5xl mx-auto mt-16 text-center">
-          <h2 className="text-2xl font-bold mb-4">
+        <div className="max-w-[1120px] mx-auto px-5 md:px-12 mt-16 text-center">
+          <h2 className="text-[32px] md:text-[40px] leading-[1.15] tracking-[-0.015em] font-semibold mb-4">
             {isID ? 'Tertarik Bekerja Sama?' : 'Interested in Working Together?'}
           </h2>
-          <p className="text-[#A3A6AC] mb-8">
+          <p className="text-[#c7c4d7] mb-8">
             {isID
               ? 'Kami terbuka untuk kolaborasi, pilot project, dan custom development.'
               : 'We are open to collaboration, pilot projects, and custom development.'}
           </p>
           <a
             href={`/${l}/contact`}
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors min-h-[48px]"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-[#6366F1] hover:bg-[#5b5ddf] text-white font-semibold transition-colors min-h-[48px]"
           >
             {isID ? 'Hubungi Kami' : 'Contact Us'}
           </a>
