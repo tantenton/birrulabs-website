@@ -29,12 +29,23 @@ export default async function HomePage({
   const l = locale as Locale;
 
   return (
-    <main id="main-content">
-      <HeroSection locale={l} />
-      <CoreCapabilities locale={l} />
-      <FeaturedProjectsSection locale={l} />
-      <AgentOrchestration locale={l} />
-      <CTASection locale={l} />
-    </main>
+    <>
+      {/* Skip to main content — accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100]
+                   focus:px-4 focus:py-2 focus:rounded focus:bg-brand-primary focus:text-white
+                   focus:font-mono focus:text-sm"
+      >
+        Skip to main content
+      </a>
+      <main id="main-content">
+        <HeroSection locale={l} />
+        <CoreCapabilities locale={l} />
+        <FeaturedProjectsSection locale={l} />
+        <AgentOrchestration locale={l} />
+        <CTASection locale={l} />
+      </main>
+    </>
   );
 }
