@@ -89,41 +89,62 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
           {/* Right — agent diagram */}
           <div
-            className="relative h-[420px] w-full rounded-xl overflow-hidden
-                       border border-[rgba(255,255,255,0.06)]
-                       bg-[#161920] hidden lg:block"
+            className="relative h-[480px] w-full rounded-xl overflow-hidden
+                       border border-[rgba(255,255,255,0.08)]
+                       bg-[#161920] hidden lg:block
+                       shadow-[0_0_40px_rgba(99,102,241,0.08)]"
             aria-hidden="true"
           >
-            <div className="absolute inset-0 bg-grid opacity-50" />
+            <div className="absolute inset-0 bg-grid opacity-40" />
+            
+            {/* Radial glow */}
+            <div
+              className="absolute inset-0 opacity-30"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(99,102,241,0.15), transparent 70%)',
+              }}
+            />
 
             {/* Central hub */}
             <div className="absolute inset-0 flex items-center justify-center">
               <svg
-                width="360"
-                height="360"
-                viewBox="0 0 360 360"
+                width="400"
+                height="400"
+                viewBox="0 0 400 400"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="absolute"
+                className="absolute animate-[spin_60s_linear_infinite]"
+                style={{ animationDirection: 'reverse' }}
               >
                 {/* Outer ring */}
-                <circle cx="180" cy="180" r="110" stroke="rgba(99,102,241,0.12)" strokeWidth="1" />
+                <circle 
+                  cx="200" cy="200" r="130" 
+                  stroke="rgba(99,102,241,0.15)" 
+                  strokeWidth="1.5"
+                  strokeDasharray="8 8"
+                  className="animate-[spin_40s_linear_infinite]"
+                  style={{ transformOrigin: 'center' }}
+                />
                 {/* Inner ring */}
-                <circle cx="180" cy="180" r="60" stroke="rgba(99,102,241,0.18)" strokeWidth="1" />
+                <circle 
+                  cx="200" cy="200" r="70" 
+                  stroke="rgba(99,102,241,0.2)" 
+                  strokeWidth="1.5"
+                />
                 {/* Connector lines */}
                 {ORBITAL_NODES.map(({ angle, color }) => {
                   const rad = (angle - 90) * (Math.PI / 180);
-                  const x2 = 180 + Math.cos(rad) * 110;
-                  const y2 = 180 + Math.sin(rad) * 110;
+                  const x2 = 200 + Math.cos(rad) * 130;
+                  const y2 = 200 + Math.sin(rad) * 130;
                   return (
                     <line
                       key={angle}
-                      x1="180" y1="180"
+                      x1="200" y1="200"
                       x2={x2} y2={y2}
                       stroke={color}
-                      strokeOpacity="0.15"
+                      strokeOpacity="0.2"
                       strokeWidth="1"
-                      strokeDasharray="4 4"
+                      strokeDasharray="6 6"
                     />
                   );
                 })}
@@ -131,43 +152,50 @@ export default function HeroSection({ locale }: HeroSectionProps) {
 
               {/* Central node */}
               <div className="relative z-10 flex flex-col items-center justify-center
-                              w-16 h-16 rounded-xl
-                              bg-[rgba(99,102,241,0.12)]
-                              border border-[rgba(99,102,241,0.3)]">
-                <div className="w-6 h-6 rounded bg-[rgba(99,102,241,0.4)]
-                                border border-[rgba(99,102,241,0.6)]" />
-                <span className="mt-1.5 font-mono text-[9px] text-[#6366F1] tracking-widest">CORE</span>
+                              w-20 h-20 rounded-xl
+                              bg-[rgba(99,102,241,0.15)]
+                              border-2 border-[rgba(99,102,241,0.4)]
+                              shadow-[0_0_30px_rgba(99,102,241,0.3)]
+                              animate-pulse"
+                   style={{ animationDuration: '3s' }}>
+                <div className="w-8 h-8 rounded-lg bg-[rgba(99,102,241,0.5)]
+                                border border-[rgba(99,102,241,0.7)]" />
+                <span className="mt-2 font-mono text-[10px] text-[#6366F1] tracking-widest font-semibold">CORE</span>
               </div>
 
               {/* Orbital nodes */}
-              {ORBITAL_NODES.map(({ label, angle, color }) => {
+              {ORBITAL_NODES.map(({ label, angle, color }, i) => {
                 const rad = (angle - 90) * (Math.PI / 180);
-                const x = Math.cos(rad) * 110;
-                const y = Math.sin(rad) * 110;
+                const x = Math.cos(rad) * 130;
+                const y = Math.sin(rad) * 130;
                 return (
                   <div
                     key={label}
-                    className="absolute z-10 flex flex-col items-center"
+                    className="absolute z-10 flex flex-col items-center animate-pulse"
                     style={{
                       left: `calc(50% + ${x}px)`,
                       top: `calc(50% + ${y}px)`,
                       transform: 'translate(-50%, -50%)',
+                      animationDelay: `${i * 0.4}s`,
+                      animationDuration: '3s',
                     }}
                   >
                     <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center
-                                 border"
+                      className="w-11 h-11 rounded-lg flex items-center justify-center
+                                 border-2 transition-all duration-500
+                                 hover:scale-110"
                       style={{
-                        backgroundColor: `${color}18`,
-                        borderColor: `${color}35`,
+                        backgroundColor: `${color}20`,
+                        borderColor: `${color}45`,
+                        boxShadow: `0 0 20px ${color}30`,
                       }}
                     >
                       <div
-                        className="w-3 h-3 rounded-sm"
-                        style={{ backgroundColor: `${color}90` }}
+                        className="w-4 h-4 rounded-sm"
+                        style={{ backgroundColor: `${color}` }}
                       />
                     </div>
-                    <span className="mt-1.5 font-mono text-[10px] text-[#908fa0] whitespace-nowrap">
+                    <span className="mt-2 font-mono text-[11px] text-[#c7c4d7] whitespace-nowrap font-medium">
                       {label}
                     </span>
                   </div>
@@ -176,17 +204,18 @@ export default function HeroSection({ locale }: HeroSectionProps) {
             </div>
 
             {/* Corner label */}
-            <div className="absolute top-4 left-4 z-20">
-              <span className="font-mono text-[11px] text-[#908fa0]
-                              bg-[rgba(10,12,16,0.85)] px-2.5 py-1.5 rounded
-                              border border-[rgba(255,255,255,0.06)] backdrop-blur-sm">
+            <div className="absolute top-5 left-5 z-20">
+              <span className="font-mono text-[11px] text-[#c7c4d7]
+                              bg-[rgba(10,12,16,0.9)] px-3 py-2 rounded
+                              border border-[rgba(99,102,241,0.2)] backdrop-blur-sm
+                              shadow-lg">
                 System.Orchestration.01
               </span>
             </div>
 
             {/* Bottom fade */}
-            <div className="absolute bottom-0 inset-x-0 h-20
-                            bg-gradient-to-t from-[#161920] to-transparent" />
+            <div className="absolute bottom-0 inset-x-0 h-24
+                            bg-gradient-to-t from-[#161920] via-[#161920]/80 to-transparent" />
           </div>
 
         </div>

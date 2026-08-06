@@ -31,31 +31,40 @@ export default function Navbar({ locale }: NavbarProps) {
     <>
       <header
         className="fixed top-0 w-full z-50
-                   border-b border-border-subtle
-                   bg-surface/80 backdrop-blur-md"
+                   border-b border-[rgba(255,255,255,0.06)]
+                   bg-[rgba(10,12,16,0.85)] backdrop-blur-xl
+                   transition-all duration-300"
       >
-        <div className="max-w-content mx-auto px-[20px] md:px-[48px] h-16 flex items-center justify-between gap-4">
+        {/* Top accent line */}
+        <div className="absolute top-0 inset-x-0 h-px
+                        bg-gradient-to-r from-transparent via-[rgba(99,102,241,0.4)] to-transparent"
+             aria-hidden="true" />
+
+        <div className="max-w-[1120px] mx-auto px-5 md:px-12 h-16
+                        flex items-center justify-between gap-4">
 
           {/* Logo */}
           <Link
             href={`/${locale}`}
-            className="flex-shrink-0 text-headline-sm font-bold text-text-primary
-                       hover:text-text-primary transition-colors"
+            className="flex-shrink-0 font-bold text-[20px] tracking-tight
+                       text-[#e2e2e8] hover:text-white
+                       transition-colors duration-150"
             aria-label="BirruLabs home"
           >
             Birru<span className="text-gradient">Labs</span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
             {links.map(({ label, href }) => (
               <Link
                 key={href}
                 href={href}
-                className={`px-3 py-2 rounded text-body-sm font-medium transition-colors ${
+                className={`px-3.5 py-2 rounded-md text-[14px] font-medium
+                            transition-all duration-150 ${
                   isActive(href)
-                    ? 'bg-surface-elevated text-text-primary'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-elevated'
+                    ? 'bg-[rgba(99,102,241,0.1)] text-[#e2e2e8]'
+                    : 'text-[#c7c4d7] hover:text-[#e2e2e8] hover:bg-[rgba(255,255,255,0.05)]'
                 }`}
                 aria-current={isActive(href) ? 'page' : undefined}
               >
@@ -69,13 +78,15 @@ export default function Navbar({ locale }: NavbarProps) {
             <LanguageSwitcher locale={locale} />
             <Link
               href={`/${locale}/contact`}
-              className="hidden md:inline-flex btn-primary text-sm py-2 px-4 min-h-[36px]"
+              className="hidden md:inline-flex btn-primary text-[13px] py-2 px-5 min-h-[36px]"
             >
               {locale === 'id' ? 'Hubungi' : 'Contact Us'}
             </Link>
             <button
-              className="md:hidden p-2 rounded text-text-secondary
-                         hover:text-text-primary hover:bg-surface-elevated transition-colors"
+              className="md:hidden p-2 rounded-md text-[#c7c4d7]
+                         hover:text-[#e2e2e8] hover:bg-[rgba(255,255,255,0.05)]
+                         transition-all duration-150 min-h-[44px] min-w-[44px]
+                         flex items-center justify-center"
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileOpen}
