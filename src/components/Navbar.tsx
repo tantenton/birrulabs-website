@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 import LanguageSwitcher from './LanguageSwitcher';
+import CommandPalette from './CommandPalette';
+import { useScrolled } from '@/hooks/useScrolled';
 
 interface NavbarProps {
   locale: 'id' | 'en';
@@ -14,6 +16,7 @@ interface NavbarProps {
 export default function Navbar({ locale }: NavbarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const scrolled = useScrolled(20);
 
   const links = [
     { label: locale === 'id' ? 'Proyek' : 'Projects',  href: `/${locale}/projects` },
@@ -30,10 +33,12 @@ export default function Navbar({ locale }: NavbarProps) {
   return (
     <>
       <header
-        className="fixed top-0 w-full z-50
-                   border-b border-[rgba(255,255,255,0.06)]
-                   bg-[rgba(10,12,16,0.85)] backdrop-blur-xl
-                   transition-all duration-300"
+        className={`fixed top-0 w-full z-50 transition-all duration-300
+          border-b backdrop-blur-xl
+          ${scrolled
+            ? 'border-[rgba(255,255,255,0.08)] bg-[rgba(10,12,16,0.95)] shadow-[0_1px_24px_rgba(0,0,0,0.4)]'
+            : 'border-[rgba(255,255,255,0.04)] bg-[rgba(10,12,16,0.7)]'
+          }`}
       >
         {/* Top accent line */}
         <div className="absolute top-0 inset-x-0 h-px
@@ -75,6 +80,7 @@ export default function Navbar({ locale }: NavbarProps) {
 
           {/* Right */}
           <div className="flex items-center gap-3">
+            <CommandPalette locale={locale} />
             <LanguageSwitcher locale={locale} />
             <Link
               href={`/${locale}/contact`}

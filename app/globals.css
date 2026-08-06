@@ -278,4 +278,27 @@
       transform: translateY(0);
     }
   }
+
+  /* Article prose */
+  .prose-birrulabs {
+    @apply text-[16px] leading-[1.8] text-[#c7c4d7];
+  }
+  .prose-birrulabs h2 {
+    @apply text-[28px] leading-[1.25] tracking-[-0.015em] font-semibold text-[#e2e2e8] mt-12 mb-6;
+  }
+  .prose-birrulabs h3 {
+    @apply text-[22px] leading-[1.3] tracking-[-0.01em] font-semibold text-[#e2e2e8] mt-10 mb-5;
+  }
+  .prose-birrulabs p {
+    @apply mb-6;
+  }
+  .prose-birrulabs strong {
+    @apply text-[#e2e2e8] font-semibold;
+  }
+  .prose-birrulabs code {
+    @apply font-mono text-[14px] px-1.5 py-0.5 rounded bg-[rgba(99,102,241,0.08)] text-[#c0c1ff] border border-[rgba(99,102,241,0.2)];
+  }
+  .prose-birrulabs a {
+    @apply text-[#6366F1] hover:text-[#c0c1ff] underline underline-offset-2 transition-colors;
+  }
 }
