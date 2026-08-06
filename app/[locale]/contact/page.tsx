@@ -2,7 +2,7 @@
 
 import { useState, use } from 'react';
 import Link from 'next/link';
-import { Mail, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { getT } from '@/lib/translations';
 import type { Locale } from '@/lib/translations';
 
@@ -10,20 +10,60 @@ const PURPOSE_OPTIONS = [
   'partnership', 'startup', 'client', 'product', 'investment', 'media', 'other',
 ] as const;
 
+type FormFields = { name: string; email: string; organization: string; purpose: string; message: string };
+type FormErrors = Partial<Record<keyof FormFields, string>>;
+
+function validateForm(form: FormFields, l: Locale): FormErrors {
+  const errors: FormErrors = {};
+  if (!form.name.trim()) errors.name = l === 'id' ? 'Nama wajib diisi' : 'Name is required';
+  if (!form.email.trim()) {
+    errors.email = l === 'id' ? 'Email wajib diisi' : 'Email is required';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    errors.email = l === 'id' ? 'Format email tidak valid' : 'Invalid email format';
+  }
+  if (!form.purpose) errors.purpose = l === 'id' ? 'Pilih tujuan kontak' : 'Please select a purpose';
+  if (!form.message.trim()) {
+    errors.message = l === 'id' ? 'Pesan wajib diisi' : 'Message is required';
+  } else if (form.message.trim().length < 20) {
+    errors.message = l === 'id' ? 'Pesan minimal 20 karakter' : 'Message must be at least 20 characters';
+  }
+  return errors;
+}
+
 export default function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
   const l = (use(params)).locale as Locale;
   const t = getT(l);
 
-  const [form, setForm] = useState({ name: '', email: '', organization: '', purpose: '', message: '' });
+  const [form, setForm] = useState<FormFields>({ name: '', email: '', organization: '', purpose: '', message: '' });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof FormFields, boolean>>>({});
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [loading, setLoading] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (touched[name as keyof FormFields]) {
+      const updated = { ...form, [name]: value };
+      const newErrors = validateForm(updated, l);
+      setErrors((prev) => ({ ...prev, [name]: newErrors[name as keyof FormFields] }));
+    }
+  }
+
+  function handleBlur(e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const newErrors = validateForm(form, l);
+    setErrors((prev) => ({ ...prev, [name]: newErrors[name as keyof FormFields] }));
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const allTouched = Object.keys(form).reduce((acc, k) => ({ ...acc, [k]: true }), {});
+    setTouched(allTouched);
+    const newErrors = validateForm(form, l);
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     setLoading(true);
     // No real API yet — simulate
     await new Promise((r) => setTimeout(r, 1200));
@@ -40,6 +80,22 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
     media: { id: 'Media / Press', en: 'Media / Press' },
     other: { id: 'Lainnya', en: 'Other' },
   };
+
+  const inputClass = (field: keyof FormFields) =>
+    `w-full px-4 py-3 rounded-lg bg-[#0A0C10] text-[#e2e2e8] placeholder:text-[#6C6F75]
+     focus:outline-none transition-all duration-150
+     ${errors[field] && touched[field]
+       ? 'border-2 border-[#EF4444] focus:ring-2 focus:ring-[rgba(239,68,68,0.2)]'
+       : 'border border-[rgba(255,255,255,0.1)] focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]'
+     }`;
+
+  const FieldError = ({ field }: { field: keyof FormFields }) =>
+    errors[field] && touched[field] ? (
+      <p className="mt-1.5 flex items-center gap-1.5 font-mono text-[11px] text-[#EF4444]" role="alert">
+        <AlertCircle className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
+        {errors[field]}
+      </p>
+    ) : null;
 
   return (
     <div className="min-h-screen bg-[#0A0C10] text-[#e2e2e8]">
@@ -181,14 +237,14 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       name="name"
                       value={form.name}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg
-                                 bg-[#0A0C10] border border-[rgba(255,255,255,0.1)]
-                                 text-[#e2e2e8] placeholder:text-[#6C6F75]
-                                 focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]
-                                 transition-all duration-150"
+                      onBlur={handleBlur}
+                      aria-required="true"
+                      aria-invalid={!!errors.name && touched.name}
+                      aria-describedby={errors.name && touched.name ? 'name-error' : undefined}
+                      className={inputClass('name')}
                       placeholder={l === 'id' ? 'Nama lengkap' : 'Full name'}
                     />
+                    <FieldError field="name" />
                   </div>
 
                   {/* Email */}
@@ -202,14 +258,13 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       name="email"
                       value={form.email}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg
-                                 bg-[#0A0C10] border border-[rgba(255,255,255,0.1)]
-                                 text-[#e2e2e8] placeholder:text-[#6C6F75]
-                                 focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]
-                                 transition-all duration-150"
+                      onBlur={handleBlur}
+                      aria-required="true"
+                      aria-invalid={!!errors.email && touched.email}
+                      className={inputClass('email')}
                       placeholder="you@example.com"
                     />
+                    <FieldError field="email" />
                   </div>
 
                   {/* Organization */}
@@ -223,11 +278,7 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       name="organization"
                       value={form.organization}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg
-                                 bg-[#0A0C10] border border-[rgba(255,255,255,0.1)]
-                                 text-[#e2e2e8] placeholder:text-[#6C6F75]
-                                 focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]
-                                 transition-all duration-150"
+                      className={inputClass('organization')}
                       placeholder={l === 'id' ? 'Opsional' : 'Optional'}
                     />
                   </div>
@@ -242,12 +293,10 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       name="purpose"
                       value={form.purpose}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg
-                                 bg-[#0A0C10] border border-[rgba(255,255,255,0.1)]
-                                 text-[#e2e2e8]
-                                 focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]
-                                 transition-all duration-150"
+                      onBlur={handleBlur}
+                      aria-required="true"
+                      aria-invalid={!!errors.purpose && touched.purpose}
+                      className={inputClass('purpose')}
                     >
                       <option value="">{l === 'id' ? 'Pilih...' : 'Select...'}</option>
                       {PURPOSE_OPTIONS.map((opt) => (
@@ -256,6 +305,7 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                         </option>
                       ))}
                     </select>
+                    <FieldError field="purpose" />
                   </div>
 
                   {/* Message */}
@@ -268,17 +318,16 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       name="message"
                       value={form.message}
                       onChange={handleChange}
-                      required
+                      onBlur={handleBlur}
+                      aria-required="true"
+                      aria-invalid={!!errors.message && touched.message}
                       rows={6}
-                      className="w-full px-4 py-3 rounded-lg resize-none
-                                 bg-[#0A0C10] border border-[rgba(255,255,255,0.1)]
-                                 text-[#e2e2e8] placeholder:text-[#6C6F75]
-                                 focus:outline-none focus:border-[#6366F1] focus:ring-2 focus:ring-[rgba(99,102,241,0.2)]
-                                 transition-all duration-150"
+                      className={`${inputClass('message')} resize-none`}
                       placeholder={l === 'id'
                         ? 'Ceritakan tentang proyek atau kebutuhan Anda...'
                         : 'Tell us about your project or needs...'}
                     />
+                    <FieldError field="message" />
                   </div>
 
                   {/* Submit */}
