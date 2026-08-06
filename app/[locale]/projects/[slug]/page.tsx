@@ -152,7 +152,7 @@ export default async function ProjectDetailPage({
             <div className="p-5 rounded-xl border border-[rgba(245,158,11,0.2)]
                             bg-[rgba(245,158,11,0.04)]">
               <p className="font-mono text-[12px] text-[#F59E0B]/80 leading-relaxed tracking-[0.02em]">
-                // Status: {project.status}.{' '}
+                <span>{'// '}</span>Status: {project.status}.{' '}
                 {l === 'id'
                   ? 'Proyek ini masih dalam tahap pengembangan. Tidak ada klaim palsu tentang pengguna, revenue, atau partnership.'
                   : 'This project is still under development. No false claims about users, revenue, or partnerships.'}

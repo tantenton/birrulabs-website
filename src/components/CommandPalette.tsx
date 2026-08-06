@@ -100,6 +100,7 @@ export default function CommandPalette({ locale }: CommandPaletteProps) {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         open ? closePalette() : openPalette();
+        return;
       }
     };
     window.addEventListener('keydown', handler);
